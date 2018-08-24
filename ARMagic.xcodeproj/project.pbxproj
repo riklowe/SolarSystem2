@@ -1,0 +1,538 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		709079992010CCE000740831 /* planets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 709079982010CCE000740831 /* planets.xcassets */; };
+		C97DE8C52004B1E1002F0E38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97DE8C42004B1E1002F0E38 /* AppDelegate.swift */; };
+		C97DE8CC2004B1E1002F0E38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C97DE8CB2004B1E1002F0E38 /* Assets.xcassets */; };
+		C97DE8CF2004B1E1002F0E38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C97DE8CD2004B1E1002F0E38 /* LaunchScreen.storyboard */; };
+		C97DE8D72004B326002F0E38 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97DE8D62004B326002F0E38 /* GameViewController.swift */; };
+		C9BEE9DA2005F13C00E9F49A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BEE9D92005F13C00E9F49A /* Extension.swift */; };
+		FD427BEE3062DCEE00C2F1E2 /* DwarfPlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BED3062DCEE00C2F1E2 /* DwarfPlanet.swift */; };
+		FD427BF03062DD1300C2F1E2 /* DwarfPlanetAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BEF3062DD1300C2F1E2 /* DwarfPlanetAstronomy.swift */; };
+		FD427BF230639EDE00C2F1E2 /* Comet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BF130639EDE00C2F1E2 /* Comet.swift */; };
+		FD427BF430639EF400C2F1E2 /* CometAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BF330639EF400C2F1E2 /* CometAstronomy.swift */; };
+		FD427BF730639F4700C2F1E2 /* CometBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BF630639F4700C2F1E2 /* CometBuilder.swift */; };
+		FD427BFA3063AB1400C2F1E2 /* DisplaySettingsView.swift in Resources */ = {isa = PBXBuildFile; fileRef = FD427BF93063AB1400C2F1E2 /* DisplaySettingsView.swift */; };
+		FD427BFB3063AC9700C2F1E2 /* DisplaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BF93063AB1400C2F1E2 /* DisplaySettingsView.swift */; };
+		FD427BFD3063B7EF00C2F1E2 /* StarfieldBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BFC3063B7EF00C2F1E2 /* StarfieldBuilder.swift */; };
+		FD427BFF3063BC0000C2F1E2 /* ZodiacConstellations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BFE3063BC0000C2F1E2 /* ZodiacConstellations.swift */; };
+		FD427C013063C09B00C2F1E2 /* EarthReferenceLines.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427C003063C09B00C2F1E2 /* EarthReferenceLines.swift */; };
+		FD427C033063C0AC00C2F1E2 /* EarthSeason.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427C023063C0AC00C2F1E2 /* EarthSeason.swift */; };
+		FD427C063063DAEB00C2F1E2 /* EarthMoonAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427C053063DAEB00C2F1E2 /* EarthMoonAstronomy.swift */; };
+		FD427C083063DC9C00C2F1E2 /* EclipseAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427C073063DC9C00C2F1E2 /* EclipseAstronomy.swift */; };
+		FD427C0A3063DCB900C2F1E2 /* EclipseShadowRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427C093063DCB900C2F1E2 /* EclipseShadowRenderer.swift */; };
+		FD427C0C30640C4700C2F1E2 /* VanAllenBeltBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427C0B30640C4700C2F1E2 /* VanAllenBeltBuilder.swift */; };
+		FD427C0E3064402900C2F1E2 /* SolarSystemDisplayMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427C0D3064402900C2F1E2 /* SolarSystemDisplayMode.swift */; };
+		FD7ECAA1305FDF1400D0AAFA /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAA0305FDF1400D0AAFA /* Planet.swift */; };
+		FD7ECAA3305FDF2300D0AAFA /* Moon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAA2305FDF2300D0AAFA /* Moon.swift */; };
+		FD7ECAA5305FDF3400D0AAFA /* OrbitalElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAA4305FDF3400D0AAFA /* OrbitalElements.swift */; };
+		FD7ECAA7305FDF5500D0AAFA /* Astronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAA6305FDF5500D0AAFA /* Astronomy.swift */; };
+		FD7ECAA9305FDF6700D0AAFA /* PlanetAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAA8305FDF6700D0AAFA /* PlanetAstronomy.swift */; };
+		FD7ECAAB305FDF7800D0AAFA /* MoonAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAAA305FDF7800D0AAFA /* MoonAstronomy.swift */; };
+		FD7ECAAD305FDF8900D0AAFA /* SolarSystemData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAAC305FDF8900D0AAFA /* SolarSystemData.swift */; };
+		FD7ECAAF305FDF9700D0AAFA /* RingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAAE305FDF9700D0AAFA /* RingFactory.swift */; };
+		FD7ECAB1305FDFAA00D0AAFA /* SceneFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAB0305FDFAA00D0AAFA /* SceneFactory.swift */; };
+		FD7ECAB3305FDFBB00D0AAFA /* SimulationClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAB2305FDFBB00D0AAFA /* SimulationClock.swift */; };
+		FD7ECAB5305FDFCA00D0AAFA /* SolarSystemBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAB4305FDFCA00D0AAFA /* SolarSystemBuilder.swift */; };
+		FD7ECAB930600B4200D0AAFA /* AsteroidBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAB830600B4200D0AAFA /* AsteroidBelt.swift */; };
+		FD7ECABB306030CC00D0AAFA /* AsteroidData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECABA306030CC00D0AAFA /* AsteroidData.swift */; };
+		FD7ECABD306030DF00D0AAFA /* AsteroidAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECABC306030DF00D0AAFA /* AsteroidAstronomy.swift */; };
+		FD7ECABF306030F200D0AAFA /* MajorAsteroidBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECABE306030F200D0AAFA /* MajorAsteroidBuilder.swift */; };
+		FD7ECAC1306032D700D0AAFA /* Asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAC0306032D700D0AAFA /* Asteroid.swift */; };
+		FD7ECAC93062A6EE00D0AAFA /* version.swift in Resources */ = {isa = PBXBuildFile; fileRef = FD7ECAC83062A6EE00D0AAFA /* version.swift */; };
+		FD7ECACB3062D05400D0AAFA /* KuiperBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECACA3062D05400D0AAFA /* KuiperBelt.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		709079982010CCE000740831 /* planets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = planets.xcassets; sourceTree = "<group>"; };
+		C97DE8C12004B1E1002F0E38 /* ARMagic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMagic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C97DE8C42004B1E1002F0E38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C97DE8CB2004B1E1002F0E38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C97DE8CE2004B1E1002F0E38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C97DE8D02004B1E1002F0E38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C97DE8D62004B326002F0E38 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		C9BEE9D92005F13C00E9F49A /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		FD427BED3062DCEE00C2F1E2 /* DwarfPlanet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DwarfPlanet.swift; sourceTree = "<group>"; };
+		FD427BEF3062DD1300C2F1E2 /* DwarfPlanetAstronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DwarfPlanetAstronomy.swift; sourceTree = "<group>"; };
+		FD427BF130639EDE00C2F1E2 /* Comet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comet.swift; sourceTree = "<group>"; };
+		FD427BF330639EF400C2F1E2 /* CometAstronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CometAstronomy.swift; sourceTree = "<group>"; };
+		FD427BF630639F4700C2F1E2 /* CometBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CometBuilder.swift; sourceTree = "<group>"; };
+		FD427BF93063AB1400C2F1E2 /* DisplaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySettingsView.swift; sourceTree = "<group>"; };
+		FD427BFC3063B7EF00C2F1E2 /* StarfieldBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarfieldBuilder.swift; sourceTree = "<group>"; };
+		FD427BFE3063BC0000C2F1E2 /* ZodiacConstellations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZodiacConstellations.swift; sourceTree = "<group>"; };
+		FD427C003063C09B00C2F1E2 /* EarthReferenceLines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthReferenceLines.swift; sourceTree = "<group>"; };
+		FD427C023063C0AC00C2F1E2 /* EarthSeason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthSeason.swift; sourceTree = "<group>"; };
+		FD427C053063DAEB00C2F1E2 /* EarthMoonAstronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthMoonAstronomy.swift; sourceTree = "<group>"; };
+		FD427C073063DC9C00C2F1E2 /* EclipseAstronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EclipseAstronomy.swift; sourceTree = "<group>"; };
+		FD427C093063DCB900C2F1E2 /* EclipseShadowRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EclipseShadowRenderer.swift; sourceTree = "<group>"; };
+		FD427C0B30640C4700C2F1E2 /* VanAllenBeltBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VanAllenBeltBuilder.swift; sourceTree = "<group>"; };
+		FD427C0D3064402900C2F1E2 /* SolarSystemDisplayMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSystemDisplayMode.swift; sourceTree = "<group>"; };
+		FD7ECAA0305FDF1400D0AAFA /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		FD7ECAA2305FDF2300D0AAFA /* Moon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moon.swift; sourceTree = "<group>"; };
+		FD7ECAA4305FDF3400D0AAFA /* OrbitalElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbitalElements.swift; sourceTree = "<group>"; };
+		FD7ECAA6305FDF5500D0AAFA /* Astronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Astronomy.swift; sourceTree = "<group>"; };
+		FD7ECAA8305FDF6700D0AAFA /* PlanetAstronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetAstronomy.swift; sourceTree = "<group>"; };
+		FD7ECAAA305FDF7800D0AAFA /* MoonAstronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonAstronomy.swift; sourceTree = "<group>"; };
+		FD7ECAAC305FDF8900D0AAFA /* SolarSystemData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSystemData.swift; sourceTree = "<group>"; };
+		FD7ECAAE305FDF9700D0AAFA /* RingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingFactory.swift; sourceTree = "<group>"; };
+		FD7ECAB0305FDFAA00D0AAFA /* SceneFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFactory.swift; sourceTree = "<group>"; };
+		FD7ECAB2305FDFBB00D0AAFA /* SimulationClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationClock.swift; sourceTree = "<group>"; };
+		FD7ECAB4305FDFCA00D0AAFA /* SolarSystemBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSystemBuilder.swift; sourceTree = "<group>"; };
+		FD7ECAB830600B4200D0AAFA /* AsteroidBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsteroidBelt.swift; sourceTree = "<group>"; };
+		FD7ECABA306030CC00D0AAFA /* AsteroidData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsteroidData.swift; sourceTree = "<group>"; };
+		FD7ECABC306030DF00D0AAFA /* AsteroidAstronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsteroidAstronomy.swift; sourceTree = "<group>"; };
+		FD7ECABE306030F200D0AAFA /* MajorAsteroidBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajorAsteroidBuilder.swift; sourceTree = "<group>"; };
+		FD7ECAC0306032D700D0AAFA /* Asteroid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asteroid.swift; sourceTree = "<group>"; };
+		FD7ECAC83062A6EE00D0AAFA /* version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = version.swift; sourceTree = "<group>"; };
+		FD7ECACA3062D05400D0AAFA /* KuiperBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KuiperBelt.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C97DE8BE2004B1E1002F0E38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C97DE8B82004B1E1002F0E38 = {
+			isa = PBXGroup;
+			children = (
+				C97DE8C32004B1E1002F0E38 /* ARMagic */,
+				C97DE8C22004B1E1002F0E38 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C97DE8C22004B1E1002F0E38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C97DE8C12004B1E1002F0E38 /* ARMagic.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C97DE8C32004B1E1002F0E38 /* ARMagic */ = {
+			isa = PBXGroup;
+			children = (
+				FD7ECAC83062A6EE00D0AAFA /* version.swift */,
+				FD427BF93063AB1400C2F1E2 /* DisplaySettingsView.swift */,
+				C97DE8D62004B326002F0E38 /* GameViewController.swift */,
+				FD7ECAB2305FDFBB00D0AAFA /* SimulationClock.swift */,
+				FD7ECAC73061959100D0AAFA /* Assets */,
+				FD427BF530639F0100C2F1E2 /* Comets  */,
+				FD7ECAC4306184D200D0AAFA /* Utils */,
+				FD427C043063C28D00C2F1E2 /* Earth */,
+				FD7ECAC3306184B600D0AAFA /* Moon */,
+				FD7ECAC230617DB000D0AAFA /* Astroids */,
+				FD7ECAC530618C1A00D0AAFA /* Planet */,
+				FD7ECAC63061950400D0AAFA /* Solar System */,
+				C97DE8CD2004B1E1002F0E38 /* LaunchScreen.storyboard */,
+				C97DE8D02004B1E1002F0E38 /* Info.plist */,
+			);
+			path = ARMagic;
+			sourceTree = "<group>";
+		};
+		FD427BF530639F0100C2F1E2 /* Comets  */ = {
+			isa = PBXGroup;
+			children = (
+				FD427BF630639F4700C2F1E2 /* CometBuilder.swift */,
+				FD427BF130639EDE00C2F1E2 /* Comet.swift */,
+				FD427BF330639EF400C2F1E2 /* CometAstronomy.swift */,
+			);
+			path = "Comets ";
+			sourceTree = "<group>";
+		};
+		FD427BF83063AAC000C2F1E2 /* Dwaft Planets */ = {
+			isa = PBXGroup;
+			children = (
+				FD427BED3062DCEE00C2F1E2 /* DwarfPlanet.swift */,
+				FD427BEF3062DD1300C2F1E2 /* DwarfPlanetAstronomy.swift */,
+			);
+			path = "Dwaft Planets";
+			sourceTree = "<group>";
+		};
+		FD427C043063C28D00C2F1E2 /* Earth */ = {
+			isa = PBXGroup;
+			children = (
+				FD427C0B30640C4700C2F1E2 /* VanAllenBeltBuilder.swift */,
+				FD427C003063C09B00C2F1E2 /* EarthReferenceLines.swift */,
+				FD427C023063C0AC00C2F1E2 /* EarthSeason.swift */,
+			);
+			path = Earth;
+			sourceTree = "<group>";
+		};
+		FD7ECAC230617DB000D0AAFA /* Astroids */ = {
+			isa = PBXGroup;
+			children = (
+				FD7ECACA3062D05400D0AAFA /* KuiperBelt.swift */,
+				FD7ECABE306030F200D0AAFA /* MajorAsteroidBuilder.swift */,
+				FD7ECABA306030CC00D0AAFA /* AsteroidData.swift */,
+				FD7ECABC306030DF00D0AAFA /* AsteroidAstronomy.swift */,
+				FD7ECAC0306032D700D0AAFA /* Asteroid.swift */,
+				FD7ECAB830600B4200D0AAFA /* AsteroidBelt.swift */,
+			);
+			path = Astroids;
+			sourceTree = "<group>";
+		};
+		FD7ECAC3306184B600D0AAFA /* Moon */ = {
+			isa = PBXGroup;
+			children = (
+				FD427C093063DCB900C2F1E2 /* EclipseShadowRenderer.swift */,
+				FD427C073063DC9C00C2F1E2 /* EclipseAstronomy.swift */,
+				FD427C053063DAEB00C2F1E2 /* EarthMoonAstronomy.swift */,
+				FD7ECAA2305FDF2300D0AAFA /* Moon.swift */,
+				FD7ECAAA305FDF7800D0AAFA /* MoonAstronomy.swift */,
+			);
+			path = Moon;
+			sourceTree = "<group>";
+		};
+		FD7ECAC4306184D200D0AAFA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				C9BEE9D92005F13C00E9F49A /* Extension.swift */,
+				C97DE8C42004B1E1002F0E38 /* AppDelegate.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		FD7ECAC530618C1A00D0AAFA /* Planet */ = {
+			isa = PBXGroup;
+			children = (
+				FD7ECAA0305FDF1400D0AAFA /* Planet.swift */,
+				FD7ECAA8305FDF6700D0AAFA /* PlanetAstronomy.swift */,
+				FD7ECAAE305FDF9700D0AAFA /* RingFactory.swift */,
+				FD427BF83063AAC000C2F1E2 /* Dwaft Planets */,
+			);
+			path = Planet;
+			sourceTree = "<group>";
+		};
+		FD7ECAC63061950400D0AAFA /* Solar System */ = {
+			isa = PBXGroup;
+			children = (
+				FD427C0D3064402900C2F1E2 /* SolarSystemDisplayMode.swift */,
+				FD7ECAB0305FDFAA00D0AAFA /* SceneFactory.swift */,
+				FD7ECAAC305FDF8900D0AAFA /* SolarSystemData.swift */,
+				FD7ECAA4305FDF3400D0AAFA /* OrbitalElements.swift */,
+				FD7ECAB4305FDFCA00D0AAFA /* SolarSystemBuilder.swift */,
+				FD7ECAA6305FDF5500D0AAFA /* Astronomy.swift */,
+				FD427BFC3063B7EF00C2F1E2 /* StarfieldBuilder.swift */,
+				FD427BFE3063BC0000C2F1E2 /* ZodiacConstellations.swift */,
+			);
+			path = "Solar System";
+			sourceTree = "<group>";
+		};
+		FD7ECAC73061959100D0AAFA /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				709079982010CCE000740831 /* planets.xcassets */,
+				C97DE8CB2004B1E1002F0E38 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C97DE8C02004B1E1002F0E38 /* ARMagic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C97DE8D32004B1E1002F0E38 /* Build configuration list for PBXNativeTarget "ARMagic" */;
+			buildPhases = (
+				C97DE8BD2004B1E1002F0E38 /* Sources */,
+				C97DE8BE2004B1E1002F0E38 /* Frameworks */,
+				C97DE8BF2004B1E1002F0E38 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ARMagic;
+			productName = ARMagic;
+			productReference = C97DE8C12004B1E1002F0E38 /* ARMagic.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C97DE8B92004B1E1002F0E38 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = "Alex Nagy";
+				TargetAttributes = {
+					C97DE8C02004B1E1002F0E38 = {
+						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C97DE8BC2004B1E1002F0E38 /* Build configuration list for PBXProject "ARMagic" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C97DE8B82004B1E1002F0E38;
+			productRefGroup = C97DE8C22004B1E1002F0E38 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C97DE8C02004B1E1002F0E38 /* ARMagic */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C97DE8BF2004B1E1002F0E38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD427BFA3063AB1400C2F1E2 /* DisplaySettingsView.swift in Resources */,
+				C97DE8CF2004B1E1002F0E38 /* LaunchScreen.storyboard in Resources */,
+				C97DE8CC2004B1E1002F0E38 /* Assets.xcassets in Resources */,
+				FD7ECAC93062A6EE00D0AAFA /* version.swift in Resources */,
+				709079992010CCE000740831 /* planets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C97DE8BD2004B1E1002F0E38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD427BFB3063AC9700C2F1E2 /* DisplaySettingsView.swift in Sources */,
+				FD7ECAA9305FDF6700D0AAFA /* PlanetAstronomy.swift in Sources */,
+				FD427C083063DC9C00C2F1E2 /* EclipseAstronomy.swift in Sources */,
+				FD427C013063C09B00C2F1E2 /* EarthReferenceLines.swift in Sources */,
+				FD427C063063DAEB00C2F1E2 /* EarthMoonAstronomy.swift in Sources */,
+				FD7ECAC1306032D700D0AAFA /* Asteroid.swift in Sources */,
+				FD7ECAA3305FDF2300D0AAFA /* Moon.swift in Sources */,
+				FD7ECABB306030CC00D0AAFA /* AsteroidData.swift in Sources */,
+				FD7ECABD306030DF00D0AAFA /* AsteroidAstronomy.swift in Sources */,
+				FD7ECAB3305FDFBB00D0AAFA /* SimulationClock.swift in Sources */,
+				C9BEE9DA2005F13C00E9F49A /* Extension.swift in Sources */,
+				FD427BF03062DD1300C2F1E2 /* DwarfPlanetAstronomy.swift in Sources */,
+				FD7ECAA5305FDF3400D0AAFA /* OrbitalElements.swift in Sources */,
+				FD427BFD3063B7EF00C2F1E2 /* StarfieldBuilder.swift in Sources */,
+				C97DE8D72004B326002F0E38 /* GameViewController.swift in Sources */,
+				FD7ECAB5305FDFCA00D0AAFA /* SolarSystemBuilder.swift in Sources */,
+				FD427BF430639EF400C2F1E2 /* CometAstronomy.swift in Sources */,
+				C97DE8C52004B1E1002F0E38 /* AppDelegate.swift in Sources */,
+				FD7ECAB930600B4200D0AAFA /* AsteroidBelt.swift in Sources */,
+				FD7ECAAF305FDF9700D0AAFA /* RingFactory.swift in Sources */,
+				FD427BF730639F4700C2F1E2 /* CometBuilder.swift in Sources */,
+				FD427C0C30640C4700C2F1E2 /* VanAllenBeltBuilder.swift in Sources */,
+				FD7ECABF306030F200D0AAFA /* MajorAsteroidBuilder.swift in Sources */,
+				FD427C0E3064402900C2F1E2 /* SolarSystemDisplayMode.swift in Sources */,
+				FD7ECAB1305FDFAA00D0AAFA /* SceneFactory.swift in Sources */,
+				FD427C033063C0AC00C2F1E2 /* EarthSeason.swift in Sources */,
+				FD7ECAA7305FDF5500D0AAFA /* Astronomy.swift in Sources */,
+				FD427BFF3063BC0000C2F1E2 /* ZodiacConstellations.swift in Sources */,
+				FD7ECAA1305FDF1400D0AAFA /* Planet.swift in Sources */,
+				FD7ECAAD305FDF8900D0AAFA /* SolarSystemData.swift in Sources */,
+				FD7ECACB3062D05400D0AAFA /* KuiperBelt.swift in Sources */,
+				FD427BF230639EDE00C2F1E2 /* Comet.swift in Sources */,
+				FD427BEE3062DCEE00C2F1E2 /* DwarfPlanet.swift in Sources */,
+				FD427C0A3063DCB900C2F1E2 /* EclipseShadowRenderer.swift in Sources */,
+				FD7ECAAB305FDF7800D0AAFA /* MoonAstronomy.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C97DE8CD2004B1E1002F0E38 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C97DE8CE2004B1E1002F0E38 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C97DE8D12004B1E1002F0E38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C97DE8D22004B1E1002F0E38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C97DE8D42004B1E1002F0E38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y56SSGALT7;
+				INFOPLIST_FILE = ARMagic/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Lowedown.ARSolarSystem;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C97DE8D52004B1E1002F0E38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Y56SSGALT7;
+				INFOPLIST_FILE = ARMagic/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Lowedown.ARSolarSystem;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C97DE8BC2004B1E1002F0E38 /* Build configuration list for PBXProject "ARMagic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C97DE8D12004B1E1002F0E38 /* Debug */,
+				C97DE8D22004B1E1002F0E38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C97DE8D32004B1E1002F0E38 /* Build configuration list for PBXNativeTarget "ARMagic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C97DE8D42004B1E1002F0E38 /* Debug */,
+				C97DE8D52004B1E1002F0E38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C97DE8B92004B1E1002F0E38 /* Project object */;
+}
