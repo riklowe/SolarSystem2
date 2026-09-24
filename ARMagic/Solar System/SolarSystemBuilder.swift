@@ -57,6 +57,9 @@ final class SolarSystemBuilder {
     private var eclipseShadowRenderer: EclipseShadowRenderer?
     private var vanAllenBeltBuilder: VanAllenBeltBuilder?
 
+    private var plutoVisible = true
+    private var planetOrbitsVisible = true
+
     init(
         scene: SCNScene,
         simulationClock: SimulationClock,
@@ -234,17 +237,23 @@ final class SolarSystemBuilder {
     // ============================================================
 
     private func planetDisplayRadius(for planet: Planet, date: Date) -> CGFloat {
-        if displayScale.useAstronomicalPlanetDistances,
+
+        let usesAUOrbitSpacing =
+            displayMode == .astronomicalDistances ||
+            displayMode == .trueBodiesAstronomicalDistances
+
+        if usesAUOrbitSpacing,
            let elements = PlanetAstronomy.currentElements(
                 for: planet.name,
                 date: date
            ) {
+
             return CGFloat(elements.a) * displayScale.astronomicalUnitsToSceneUnits
         }
 
         return CGFloat(planet.position.x)
     }
-
+    
     // ============================================================
     // MARK: - TRUE BODY SCALE DISPLAY
     // ============================================================
@@ -371,7 +380,7 @@ final class SolarSystemBuilder {
             return earthMoonEarthRadius
         }
 
-        if displayMode == .relativeSizes {
+        if displayMode == .relativeSizes || displayMode == .trueBodiesAstronomicalDistances {
             return trueBodyRadius(
                 bodyName: planet.name,
                 fallbackRawSize: planet.radius
@@ -392,8 +401,8 @@ final class SolarSystemBuilder {
             return earthMoonMoonRadius
         }
 
-        if displayMode == .relativeSizes {
-
+        if displayMode == .relativeSizes || displayMode == .trueBodiesAstronomicalDistances
+        {
             return trueBodyRadius(
                 bodyName: moon.name,
                 fallbackRawSize: moon.radius
@@ -431,7 +440,7 @@ final class SolarSystemBuilder {
     }
 
     private func dwarfPlanetBodyRadius(for dwarfPlanet: DwarfPlanet) -> CGFloat {
-        if displayMode == .relativeSizes {
+        if displayMode == .relativeSizes || displayMode == .trueBodiesAstronomicalDistances {
             return trueBodyRadius(
                 bodyName: dwarfPlanet.name,
                 fallbackRawSize: dwarfPlanet.radius
@@ -494,7 +503,11 @@ final class SolarSystemBuilder {
     // ============================================================
 
     private func nearestPlanetOrbitGap(for parentPlanet: Planet, date: Date) -> CGFloat? {
-        guard displayMode == .astronomicalDistances else { return nil }
+
+        guard displayMode == .astronomicalDistances ||
+              displayMode == .trueBodiesAstronomicalDistances else {
+            return nil
+        }
 
         let parentRadius = planetDisplayRadius(for: parentPlanet, date: date)
 
@@ -514,10 +527,13 @@ final class SolarSystemBuilder {
     }
 
     private func moonSystemScale(for parentPlanet: Planet, date: Date) -> Float {
-        guard displayMode == .astronomicalDistances else {
+
+        guard displayMode == .astronomicalDistances ||
+              displayMode == .trueBodiesAstronomicalDistances else {
+
             return 1.0
         }
-
+        
         let largestOriginalOrbit = parentPlanet.moons
             .map { CGFloat(abs($0.position.x)) }
             .max() ?? 0.0
@@ -811,6 +827,28 @@ final class SolarSystemBuilder {
         }
     }
 
+    private var dwarfPlanetDistanceScale: Float {
+
+        if displayMode == .trueBodiesAstronomicalDistances {
+            return Float(
+                displayScale.astronomicalUnitsToSceneUnits / 0.25
+            )
+        }
+
+        return 1.0
+    }
+
+    private func scaledDwarfPlanetPosition(_ position: SCNVector3) -> SCNVector3 {
+
+        let scale = dwarfPlanetDistanceScale
+
+        return SCNVector3(
+            position.x * scale,
+            position.y * scale,
+            position.z * scale
+        )
+    }
+    
     // ============================================================
     // MARK: - DWARF PLANET
     // ============================================================
@@ -825,9 +863,11 @@ final class SolarSystemBuilder {
         let systemNode = SCNNode()
         systemNode.name = "\(dwarfPlanet.name.lowercased())_system"
 
-        systemNode.position = DwarfPlanetAstronomy.orbitalPosition(
-            for: dwarfPlanet,
-            date: date
+        systemNode.position = scaledDwarfPlanetPosition(
+            DwarfPlanetAstronomy.orbitalPosition(
+                for: dwarfPlanet,
+                date: date
+            )
         )
 
         print("")
@@ -1727,11 +1767,14 @@ final class SolarSystemBuilder {
                 * 2.0
 
             vertices.append(
-                DwarfPlanetAstronomy.orbitPoint(
-                    for: dwarfPlanet,
-                    eccentricAnomaly: eccentricAnomaly
+                scaledDwarfPlanetPosition(
+                    DwarfPlanetAstronomy.orbitPoint(
+                        for: dwarfPlanet,
+                        eccentricAnomaly: eccentricAnomaly
+                    )
                 )
             )
+
         }
 
         let source =
@@ -2767,12 +2810,46 @@ final class SolarSystemBuilder {
         }
     }
 
+    func setPlutoVisible(
+        _ visible: Bool
+    ) {
+
+        plutoVisible = visible
+
+        guard let rootNode else {
+            return
+        }
+
+        // Hide/show the complete Pluto-Charon system.
+        if let plutoSystem = planetNodes.first(where: {
+            $0.planet.name.lowercased() == "pluto"
+        })?.systemNode {
+
+            plutoSystem.isHidden = !visible
+        }
+
+        // Hide/show Pluto's heliocentric orbit.
+        for node in rootNode.childNodes {
+
+            guard
+                let nodeName = node.name?.lowercased(),
+                nodeName == "pluto_orbit"
+            else {
+                continue
+            }
+
+            node.isHidden =
+                !visible || !planetOrbitsVisible
+        }
+    }
+    
     func setPlanetOrbitsVisible(
         _ visible: Bool
     ) {
 
-        guard let rootNode
-        else {
+        planetOrbitsVisible = visible
+
+        guard let rootNode else {
             return
         }
 
@@ -2801,8 +2878,13 @@ final class SolarSystemBuilder {
                 objectName
             ) {
 
-                node.isHidden =
-                    !visible
+                if objectName == "pluto" {
+                    node.isHidden =
+                        !visible || !plutoVisible
+                } else {
+                    node.isHidden =
+                        !visible
+                }
             }
         }
     }
@@ -3214,9 +3296,11 @@ final class SolarSystemBuilder {
         for item in dwarfPlanetNodes {
 
             item.systemNode.position =
-                DwarfPlanetAstronomy.orbitalPosition(
-                    for: item.dwarfPlanet,
-                    date: date
+                scaledDwarfPlanetPosition(
+                    DwarfPlanetAstronomy.orbitalPosition(
+                        for: item.dwarfPlanet,
+                        date: date
+                    )
                 )
         }
 

@@ -15,6 +15,10 @@ AR SOLAR SYSTEM — DEVELOPMENT HISTORY
 Version 1.0 — Eclipses, Van Allen Belts and Display Modes
 ------------------------------------------------------------------------
 
+// • Added a persistent Pluto display option allowing the Pluto–Charon system and Pluto's heliocentric orbit to be shown or hidden independently.
+// • Added a fifth display mode, True Body + AU, combining true relative body sizes with expanded astronomical-unit planetary orbit spacing.
+// • True Body + AU uses 1.0 scene unit per AU while retaining the existing True Body Scale Sun, planet, dwarf-planet and moon size ratios.
+// • Extended True Body + AU scaling to dwarf-planet positions, dwarf-planet orbit paths and the Kuiper Belt for consistent outer-Solar-System spacing.
 // • Refined Van Allen belt rendering across all display modes, with clearer orange inner and cyan outer radiation belts, improved point visibility and reduced visual clutter.
 // • Updated Kuiper Belt rendering to remain visible and appropriately positioned across Compact, True Body Scale and AU Orbit Spacing modes.
 // • Added four scale / display modes: Compact, True Body Scale, AU Orbit Spacing and Earth–Moon Scale.

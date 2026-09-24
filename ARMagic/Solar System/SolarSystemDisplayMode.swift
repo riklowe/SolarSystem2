@@ -12,6 +12,7 @@ enum SolarSystemDisplayMode: String, CaseIterable {
     case compact
     case relativeSizes
     case astronomicalDistances
+    case trueBodiesAstronomicalDistances
     case earthMoon
 
     var title: String {
@@ -25,6 +26,9 @@ enum SolarSystemDisplayMode: String, CaseIterable {
         case .astronomicalDistances:
             return "AU Orbit Spacing"
 
+        case .trueBodiesAstronomicalDistances:
+            return "True Body + AU"
+
         case .earthMoon:
             return "Earth–Moon Scale"
         }
@@ -37,8 +41,12 @@ enum SolarSystemDisplayMode: String, CaseIterable {
 
         case .relativeSizes:
             return "Sun, planets and moons shown at true relative body sizes while orbital spacing remains compact."
+
         case .astronomicalDistances:
             return "Planetary orbit spacing follows astronomical-unit ratios, with moon systems adjusted for visual clarity."
+
+        case .trueBodiesAstronomicalDistances:
+            return "True relative body sizes combined with astronomical-unit planetary orbit spacing, with moon systems adjusted for visual clarity."
 
         case .earthMoon:
             return "Earth and Moon shown with a more realistic relative size and distance relationship."
@@ -89,6 +97,18 @@ struct SolarSystemDisplayScale {
                 minimumPlanetRadius: 0.0,
                 minimumMoonRadius: 0.0001,
                 astronomicalUnitsToSceneUnits: 0.25,
+                useAstronomicalPlanetDistances: true,
+                usePhysicalMoonDistances: false,
+                showOnlyEarthMoonSystem: false
+            )
+
+        case .trueBodiesAstronomicalDistances:
+            return SolarSystemDisplayScale(
+                planetRadiusScale: 0.10,
+                moonRadiusScale: 0.10,
+                minimumPlanetRadius: 0.0,
+                minimumMoonRadius: 0.0001,
+                astronomicalUnitsToSceneUnits: 1.00,
                 useAstronomicalPlanetDistances: true,
                 usePhysicalMoonDistances: false,
                 showOnlyEarthMoonSystem: false

@@ -44,6 +44,7 @@ final class KuiperBelt {
 
     private static let compactScale: Float = 0.72
     private static let astronomicalScale: Float = 1.00
+    private static let trueBodyAstronomicalScale: Float = 4.00
 
     private static let objectCount = 700
 
@@ -65,8 +66,12 @@ final class KuiperBelt {
 
         switch displayMode {
 
+            
         case .astronomicalDistances:
             distanceScale = astronomicalScale
+
+        case .trueBodiesAstronomicalDistances:
+            distanceScale = trueBodyAstronomicalScale
 
         case .compact, .relativeSizes:
             distanceScale = compactScale
@@ -74,6 +79,7 @@ final class KuiperBelt {
         case .earthMoon:
             distanceScale = compactScale
         }
+
 
         var generator = KuiperBeltSeededGenerator(
             seed: 0x4B5549504552

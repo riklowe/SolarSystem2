@@ -133,6 +133,7 @@ final class DisplaySettingsView: UIView {
         case zodiacConstellations = 18
         case earthReferenceLines = 19
         case vanAllenBelts = 20
+        case pluto = 21
     }
 
     // ============================================================
@@ -297,6 +298,8 @@ final class DisplaySettingsView: UIView {
 
         case .vanAllenBelts:
             return vanAllenBeltsSwitch
+        case .pluto:
+            return plutoSwitch
         }
     }
 
@@ -368,6 +371,11 @@ final class DisplaySettingsView: UIView {
     private lazy var dwarfPlanetsSwitch =
         createDisplaySwitch(
             setting: .dwarfPlanets
+        )
+
+    private lazy var plutoSwitch =
+        createDisplaySwitch(
+            setting: .pluto
         )
 
     private lazy var planetOrbitsSwitch =
@@ -475,6 +483,12 @@ final class DisplaySettingsView: UIView {
         createDisplayModeButton(
             title: "AU Orbit Spacing",
             action: #selector(astronomicalDistancesModeTapped)
+        )
+
+    private lazy var trueBodiesAstronomicalDistancesModeButton =
+        createDisplayModeButton(
+            title: "True Body + AU",
+            action: #selector(trueBodiesAstronomicalDistancesModeTapped)
         )
 
     private lazy var earthMoonModeButton =
@@ -748,6 +762,7 @@ final class DisplaySettingsView: UIView {
                     compactModeButton,
                     relativeSizesModeButton,
                     astronomicalDistancesModeButton,
+                    trueBodiesAstronomicalDistancesModeButton,
                     earthMoonModeButton
                 ]
             )
@@ -804,6 +819,11 @@ final class DisplaySettingsView: UIView {
                     createSettingsRow(
                         title: "Dwarf Planets",
                         control: dwarfPlanetsSwitch
+                    ),
+
+                    createSettingsRow(
+                        title: "Pluto",
+                        control: plutoSwitch
                     ),
 
                     pathsHeading,
@@ -963,6 +983,10 @@ final class DisplaySettingsView: UIView {
             ),
 
             astronomicalDistancesModeButton.heightAnchor.constraint(
+                equalToConstant: 42
+            ),
+
+            trueBodiesAstronomicalDistancesModeButton.heightAnchor.constraint(
                 equalToConstant: 42
             ),
 
@@ -1315,6 +1339,11 @@ final class DisplaySettingsView: UIView {
             animated: true
         )
 
+        plutoSwitch.setOn(
+            enabled,
+            animated: true
+        )
+        
         planetLabelsSwitch.setOn(
             enabled,
             animated: true
@@ -1411,6 +1440,13 @@ final class DisplaySettingsView: UIView {
         )
     }
 
+    @objc private func trueBodiesAstronomicalDistancesModeTapped() {
+
+        selectDisplayMode(
+            .trueBodiesAstronomicalDistances
+        )
+    }
+
     @objc private func earthMoonModeTapped() {
 
         selectDisplayMode(
@@ -1457,11 +1493,16 @@ final class DisplaySettingsView: UIView {
         )
 
         updateDisplayModeButton(
+            trueBodiesAstronomicalDistancesModeButton,
+            selected: mode == .trueBodiesAstronomicalDistances
+        )
+
+        updateDisplayModeButton(
             earthMoonModeButton,
             selected: mode == .earthMoon
         )
     }
-
+    
     private func updateDisplayModeButton(
         _ button: UIButton,
         selected: Bool

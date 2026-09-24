@@ -39,9 +39,9 @@ enum SceneFactory {
 
         switch displayMode {
 
-        case .relativeSizes:
+        case .relativeSizes, .trueBodiesAstronomicalDistances:
 
-            // True Body Scale:
+            // True Body Scale / True Body + AU:
             // Bodies can become extremely small, so use a much smaller
             // fixed label than the normal AR presentation.
 

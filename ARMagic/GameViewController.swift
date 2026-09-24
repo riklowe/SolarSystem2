@@ -519,6 +519,12 @@ class GameViewController: UIViewController {
                     visible
                 )
 
+        case .pluto:
+            solarSystemBuilder?
+                .setPlutoVisible(
+                    visible
+                )
+            
         case .planetOrbits:
             solarSystemBuilder?
                 .setPlanetOrbitsVisible(
