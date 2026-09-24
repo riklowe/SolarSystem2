@@ -14,7 +14,32 @@ AR SOLAR SYSTEM — DEVELOPMENT HISTORY
 
 Version 1.0 — Eclipses, Van Allen Belts and Display Modes
 ------------------------------------------------------------------------
-
+// • Added Near-Earth Asteroid support as a dedicated solar-system subsystem, with independent astronomical positioning, rendering, trajectories and display controls.
+// • Added (99942) Apophis as the first fully modelled Near-Earth Asteroid.
+// • Added JPL Horizons ephemeris support for high-accuracy Near-Earth Asteroid positions and velocities.
+// • Added long-term Apophis ephemeris data covering 2028–2030, preserving the gravitational change to its heliocentric trajectory during the April 2029 Earth encounter.
+// • Added Hermite interpolation between JPL Horizons ephemeris samples for smooth date-dependent Near-Earth Asteroid positioning.
+// • Validated the Apophis 13 April 2029 close approach against matching JPL Earth and Apophis ephemerides, calculating an Earth-centre distance of approximately 38,007 km.
+// • Added pre-encounter and post-encounter Apophis trajectory rendering, joined through an exact interpolated encounter position.
+// • Added Earth-relative Apophis flyby rendering for Earth–Moon Scale mode.
+// • Added a DEBUG Apophis Flyby mode starting shortly before the 13 April 2029 close approach and running at approximately three simulated minutes per real second.
+// • Added a master Near-Earth Asteroids display setting for enabling or hiding the complete NEA subsystem.
+// • Added physically scaled Near-Earth Asteroid bodies in display modes where physical body scaling is appropriate.
+// • Added a non-physical locator crosshair for physically scaled Near-Earth Asteroids that would otherwise be too small to identify visually.
+// • Separated Near-Earth Asteroid scientific representation from navigation aids: trajectory and body position remain astronomical while the locator and label provide visual identification.
+// • Validated Apophis position, trajectory, locator and label behaviour across the current solar-system display modes.
+// • Corrected Earth–Moon orbit visualisation so the Moon orbit path is rebuilt for the selected simulation epoch and remains aligned with the calculated Moon position during the 2029 Apophis flyby.
+// • Added Realistic Spacing display mode using the displayed Sun radius as the physical scale reference for planetary orbital distances.
+// • Realistic Spacing uses 25% of the true Sun-to-orbit distance relationship, producing a scale of approximately 13.44 AR metres per astronomical unit.
+// • Extended Realistic Spacing to all major planets and Pluto using date-dependent heliocentric orbital positions rather than fixed mean orbital distances.
+// • Extended Realistic Spacing consistently to dwarf planets, dwarf-planet orbit paths and the Kuiper Belt.
+// • Extended adaptive moon-system scaling and enlarged moon visibility handling to Realistic Spacing.
+// • Added display-mode distance diagnostics showing calculated orbital semi-major axes and actual rendered AR distances whenever the solar-system display mode is changed.
+// • Added Realistic Spacing diagnostics showing instantaneous heliocentric distance in AU alongside actual rendered AR distance.
+// • Added Earth–Moon Scale diagnostics validating the rendered Earth/Moon radius ratio against the physical radius ratio.
+// • Added Earth–Moon Scale distance diagnostics comparing the instantaneous rendered Earth–Moon separation with the physical mean Earth–Moon distance.
+// • Validated all six display modes: Compact, True Body Scale, AU Orbit Spacing, Realistic Spacing, True Body + AU and Earth–Moon Scale.
+// • Validated Realistic Spacing planetary distances at approximately 13.44 AR metres per AU, including Neptune at approximately 402 metres and Pluto at approximately 479 metres for the current simulated epoch.
 // • Added a persistent Pluto display option allowing the Pluto–Charon system and Pluto's heliocentric orbit to be shown or hidden independently.
 // • Added a fifth display mode, True Body + AU, combining true relative body sizes with expanded astronomical-unit planetary orbit spacing.
 // • True Body + AU uses 1.0 scene unit per AU while retaining the existing True Body Scale Sun, planet, dwarf-planet and moon size ratios.

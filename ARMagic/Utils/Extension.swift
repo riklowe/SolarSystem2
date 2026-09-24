@@ -40,15 +40,14 @@ extension UIColor {
 }
 
 public extension Float {
-  
-  static func random() -> Float {
-    return Float(Float(arc4random()) / 0xFFFFFFFF)
-  }
-  
-  static func random(_ min: Float, max: Float) -> Float {
-    return Float.random() * (max - min) + min
-  }
-  
+
+    static func random() -> Float {
+        return Float.random(in: 0..<1)
+    }
+
+    static func random(_ min: Float, max: Float) -> Float {
+        return Float.random(in: min..<max)
+    }
 }
 
 extension Int {

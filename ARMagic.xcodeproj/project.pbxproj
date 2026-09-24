@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,7 +18,6 @@
 		FD427BF230639EDE00C2F1E2 /* Comet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BF130639EDE00C2F1E2 /* Comet.swift */; };
 		FD427BF430639EF400C2F1E2 /* CometAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BF330639EF400C2F1E2 /* CometAstronomy.swift */; };
 		FD427BF730639F4700C2F1E2 /* CometBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BF630639F4700C2F1E2 /* CometBuilder.swift */; };
-		FD427BFA3063AB1400C2F1E2 /* DisplaySettingsView.swift in Resources */ = {isa = PBXBuildFile; fileRef = FD427BF93063AB1400C2F1E2 /* DisplaySettingsView.swift */; };
 		FD427BFB3063AC9700C2F1E2 /* DisplaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BF93063AB1400C2F1E2 /* DisplaySettingsView.swift */; };
 		FD427BFD3063B7EF00C2F1E2 /* StarfieldBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BFC3063B7EF00C2F1E2 /* StarfieldBuilder.swift */; };
 		FD427BFF3063BC0000C2F1E2 /* ZodiacConstellations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD427BFE3063BC0000C2F1E2 /* ZodiacConstellations.swift */; };
@@ -45,8 +44,16 @@
 		FD7ECABD306030DF00D0AAFA /* AsteroidAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECABC306030DF00D0AAFA /* AsteroidAstronomy.swift */; };
 		FD7ECABF306030F200D0AAFA /* MajorAsteroidBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECABE306030F200D0AAFA /* MajorAsteroidBuilder.swift */; };
 		FD7ECAC1306032D700D0AAFA /* Asteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECAC0306032D700D0AAFA /* Asteroid.swift */; };
-		FD7ECAC93062A6EE00D0AAFA /* version.swift in Resources */ = {isa = PBXBuildFile; fileRef = FD7ECAC83062A6EE00D0AAFA /* version.swift */; };
 		FD7ECACB3062D05400D0AAFA /* KuiperBelt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7ECACA3062D05400D0AAFA /* KuiperBelt.swift */; };
+		FDC97525306D2079007937E6 /* NearEarthAsteroid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC97524306D2079007937E6 /* NearEarthAsteroid.swift */; };
+		FDC97527306D2095007937E6 /* NearEarthEphemerisPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC97526306D2095007937E6 /* NearEarthEphemerisPoint.swift */; };
+		FDC9752A306D20DB007937E6 /* NearEarthAsteroidData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC97529306D20DB007937E6 /* NearEarthAsteroidData.swift */; };
+		FDC9752C306D2179007937E6 /* NearEarthAsteroidAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9752B306D2179007937E6 /* NearEarthAsteroidAstronomy.swift */; };
+		FDC9752E306D21F6007937E6 /* HorizonsEphemerisDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9752D306D21F6007937E6 /* HorizonsEphemerisDownloader.swift */; };
+		FDC97532306D298C007937E6 /* apophis.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97531306D298C007937E6 /* apophis.json */; };
+		FDC97534306D2CDA007937E6 /* earth-2029-encounter.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97533306D2CDA007937E6 /* earth-2029-encounter.json */; };
+		FDC97536306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC97535306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift */; };
+		FDC97538306DC07C007937E6 /* apophis_longterm.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97537306DC07C007937E6 /* apophis_longterm.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +98,15 @@
 		FD7ECAC0306032D700D0AAFA /* Asteroid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asteroid.swift; sourceTree = "<group>"; };
 		FD7ECAC83062A6EE00D0AAFA /* version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = version.swift; sourceTree = "<group>"; };
 		FD7ECACA3062D05400D0AAFA /* KuiperBelt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KuiperBelt.swift; sourceTree = "<group>"; };
+		FDC97524306D2079007937E6 /* NearEarthAsteroid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEarthAsteroid.swift; sourceTree = "<group>"; };
+		FDC97526306D2095007937E6 /* NearEarthEphemerisPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEarthEphemerisPoint.swift; sourceTree = "<group>"; };
+		FDC97529306D20DB007937E6 /* NearEarthAsteroidData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEarthAsteroidData.swift; sourceTree = "<group>"; };
+		FDC9752B306D2179007937E6 /* NearEarthAsteroidAstronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEarthAsteroidAstronomy.swift; sourceTree = "<group>"; };
+		FDC9752D306D21F6007937E6 /* HorizonsEphemerisDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizonsEphemerisDownloader.swift; sourceTree = "<group>"; };
+		FDC97531306D298C007937E6 /* apophis.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = apophis.json; sourceTree = "<group>"; };
+		FDC97533306D2CDA007937E6 /* earth-2029-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2029-encounter.json"; sourceTree = "<group>"; };
+		FDC97535306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEarthAsteroidBuilder.swift; sourceTree = "<group>"; };
+		FDC97537306DC07C007937E6 /* apophis_longterm.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = apophis_longterm.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +189,8 @@
 		FD7ECAC230617DB000D0AAFA /* Astroids */ = {
 			isa = PBXGroup;
 			children = (
+				FDC9752F306D294B007937E6 /* Resources */,
+				FDC97528306D20AE007937E6 /* Near Earth Astroids */,
 				FD7ECACA3062D05400D0AAFA /* KuiperBelt.swift */,
 				FD7ECABE306030F200D0AAFA /* MajorAsteroidBuilder.swift */,
 				FD7ECABA306030CC00D0AAFA /* AsteroidData.swift */,
@@ -239,6 +257,37 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		FDC97528306D20AE007937E6 /* Near Earth Astroids */ = {
+			isa = PBXGroup;
+			children = (
+				FDC97535306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift */,
+				FDC9752D306D21F6007937E6 /* HorizonsEphemerisDownloader.swift */,
+				FDC9752B306D2179007937E6 /* NearEarthAsteroidAstronomy.swift */,
+				FDC97529306D20DB007937E6 /* NearEarthAsteroidData.swift */,
+				FDC97524306D2079007937E6 /* NearEarthAsteroid.swift */,
+				FDC97526306D2095007937E6 /* NearEarthEphemerisPoint.swift */,
+			);
+			path = "Near Earth Astroids";
+			sourceTree = "<group>";
+		};
+		FDC9752F306D294B007937E6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FDC97530306D295F007937E6 /* NEAEphemerides */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FDC97530306D295F007937E6 /* NEAEphemerides */ = {
+			isa = PBXGroup;
+			children = (
+				FDC97537306DC07C007937E6 /* apophis_longterm.json */,
+				FDC97533306D2CDA007937E6 /* earth-2029-encounter.json */,
+				FDC97531306D298C007937E6 /* apophis.json */,
+			);
+			path = NEAEphemerides;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -265,8 +314,9 @@
 		C97DE8B92004B1E1002F0E38 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 2600;
 				ORGANIZATIONNAME = "Alex Nagy";
 				TargetAttributes = {
 					C97DE8C02004B1E1002F0E38 = {
@@ -299,10 +349,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD427BFA3063AB1400C2F1E2 /* DisplaySettingsView.swift in Resources */,
+				FDC97532306D298C007937E6 /* apophis.json in Resources */,
+				FDC97534306D2CDA007937E6 /* earth-2029-encounter.json in Resources */,
 				C97DE8CF2004B1E1002F0E38 /* LaunchScreen.storyboard in Resources */,
 				C97DE8CC2004B1E1002F0E38 /* Assets.xcassets in Resources */,
-				FD7ECAC93062A6EE00D0AAFA /* version.swift in Resources */,
+				FDC97538306DC07C007937E6 /* apophis_longterm.json in Resources */,
 				709079992010CCE000740831 /* planets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,9 +372,11 @@
 				FD427C063063DAEB00C2F1E2 /* EarthMoonAstronomy.swift in Sources */,
 				FD7ECAC1306032D700D0AAFA /* Asteroid.swift in Sources */,
 				FD7ECAA3305FDF2300D0AAFA /* Moon.swift in Sources */,
+				FDC9752A306D20DB007937E6 /* NearEarthAsteroidData.swift in Sources */,
 				FD7ECABB306030CC00D0AAFA /* AsteroidData.swift in Sources */,
 				FD7ECABD306030DF00D0AAFA /* AsteroidAstronomy.swift in Sources */,
 				FD7ECAB3305FDFBB00D0AAFA /* SimulationClock.swift in Sources */,
+				FDC9752E306D21F6007937E6 /* HorizonsEphemerisDownloader.swift in Sources */,
 				C9BEE9DA2005F13C00E9F49A /* Extension.swift in Sources */,
 				FD427BF03062DD1300C2F1E2 /* DwarfPlanetAstronomy.swift in Sources */,
 				FD7ECAA5305FDF3400D0AAFA /* OrbitalElements.swift in Sources */,
@@ -339,16 +392,20 @@
 				FD7ECABF306030F200D0AAFA /* MajorAsteroidBuilder.swift in Sources */,
 				FD427C0E3064402900C2F1E2 /* SolarSystemDisplayMode.swift in Sources */,
 				FD7ECAB1305FDFAA00D0AAFA /* SceneFactory.swift in Sources */,
+				FDC9752C306D2179007937E6 /* NearEarthAsteroidAstronomy.swift in Sources */,
+				FDC97536306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift in Sources */,
 				FD427C033063C0AC00C2F1E2 /* EarthSeason.swift in Sources */,
 				FD7ECAA7305FDF5500D0AAFA /* Astronomy.swift in Sources */,
 				FD427BFF3063BC0000C2F1E2 /* ZodiacConstellations.swift in Sources */,
 				FD7ECAA1305FDF1400D0AAFA /* Planet.swift in Sources */,
+				FDC97527306D2095007937E6 /* NearEarthEphemerisPoint.swift in Sources */,
 				FD7ECAAD305FDF8900D0AAFA /* SolarSystemData.swift in Sources */,
 				FD7ECACB3062D05400D0AAFA /* KuiperBelt.swift in Sources */,
 				FD427BF230639EDE00C2F1E2 /* Comet.swift in Sources */,
 				FD427BEE3062DCEE00C2F1E2 /* DwarfPlanet.swift in Sources */,
 				FD427C0A3063DCB900C2F1E2 /* EclipseShadowRenderer.swift in Sources */,
 				FD7ECAAB305FDF7800D0AAFA /* MoonAstronomy.swift in Sources */,
+				FDC97525306D2079007937E6 /* NearEarthAsteroid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +448,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -400,8 +458,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Y56SSGALT7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -420,6 +480,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -450,6 +511,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -459,8 +521,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Y56SSGALT7;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -472,7 +536,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -483,10 +549,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y56SSGALT7;
 				INFOPLIST_FILE = ARMagic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Lowedown.ARSolarSystem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -500,10 +568,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Y56SSGALT7;
 				INFOPLIST_FILE = ARMagic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Lowedown.ARSolarSystem;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

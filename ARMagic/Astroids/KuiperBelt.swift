@@ -44,6 +44,7 @@ final class KuiperBelt {
 
     private static let compactScale: Float = 0.72
     private static let astronomicalScale: Float = 1.00
+    private static let realisticSpacingScale: Float = 53.76
     private static let trueBodyAstronomicalScale: Float = 4.00
 
     private static let objectCount = 700
@@ -65,10 +66,11 @@ final class KuiperBelt {
         let distanceScale: Float
 
         switch displayMode {
-
-            
         case .astronomicalDistances:
             distanceScale = astronomicalScale
+
+        case .realisticSpacing:
+            distanceScale = realisticSpacingScale
 
         case .trueBodiesAstronomicalDistances:
             distanceScale = trueBodyAstronomicalScale

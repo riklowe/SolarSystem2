@@ -12,6 +12,7 @@ enum SolarSystemDisplayMode: String, CaseIterable {
     case compact
     case relativeSizes
     case astronomicalDistances
+    case realisticSpacing
     case trueBodiesAstronomicalDistances
     case earthMoon
 
@@ -25,6 +26,9 @@ enum SolarSystemDisplayMode: String, CaseIterable {
 
         case .astronomicalDistances:
             return "AU Orbit Spacing"
+
+        case .realisticSpacing:
+            return "Realistic Spacing"
 
         case .trueBodiesAstronomicalDistances:
             return "True Body + AU"
@@ -44,6 +48,9 @@ enum SolarSystemDisplayMode: String, CaseIterable {
 
         case .astronomicalDistances:
             return "Planetary orbit spacing follows astronomical-unit ratios, with moon systems adjusted for visual clarity."
+
+        case .realisticSpacing:
+            return "Greatly expanded astronomical-unit orbit spacing to better represent the enormous empty distances between the Sun and planets."
 
         case .trueBodiesAstronomicalDistances:
             return "True relative body sizes combined with astronomical-unit planetary orbit spacing, with moon systems adjusted for visual clarity."
@@ -102,6 +109,18 @@ struct SolarSystemDisplayScale {
                 showOnlyEarthMoonSystem: false
             )
 
+        case .realisticSpacing:
+            return SolarSystemDisplayScale(
+                planetRadiusScale: 0.05,
+                moonRadiusScale: 0.05,
+                minimumPlanetRadius: 0.0,
+                minimumMoonRadius: 0.0001,
+                astronomicalUnitsToSceneUnits: 13.44,
+                useAstronomicalPlanetDistances: true,
+                usePhysicalMoonDistances: false,
+                showOnlyEarthMoonSystem: false
+            )
+            
         case .trueBodiesAstronomicalDistances:
             return SolarSystemDisplayScale(
                 planetRadiusScale: 0.10,

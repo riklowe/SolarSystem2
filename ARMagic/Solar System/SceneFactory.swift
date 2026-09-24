@@ -59,9 +59,10 @@ enum SceneFactory {
             nodeScale = isMoon ? 0.055 : 0.065
             labelGap = isMoon ? 0.003 : 0.004
 
-        case .compact, .astronomicalDistances:
+        case .compact, .astronomicalDistances, .realisticSpacing:
 
-            // Preserve the existing label appearance exactly.
+            // Compact / AU Orbit Spacing / Realistic Spacing:
+            // Preserve the existing enlarged-body label appearance.
 
             fontSize = isMoon ? 0.08 : 0.12
             nodeScale = isMoon ? 0.10 : 0.15

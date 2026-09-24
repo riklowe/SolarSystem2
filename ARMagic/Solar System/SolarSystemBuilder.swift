@@ -60,6 +60,10 @@ final class SolarSystemBuilder {
     private var plutoVisible = true
     private var planetOrbitsVisible = true
 
+    private var nearEarthAsteroidsVisible = true
+    private var nearEarthAsteroidBuilders: [NearEarthAsteroidBuilder] = []
+
+
     init(
         scene: SCNScene,
         simulationClock: SimulationClock,
@@ -210,6 +214,7 @@ final class SolarSystemBuilder {
             cometBuilder = newCometBuilder
         }
 
+
         // --------------------------------------------------------
         // Major individually simulated asteroids
         // --------------------------------------------------------
@@ -229,31 +234,101 @@ final class SolarSystemBuilder {
         newStarfieldBuilder.build()
         starfieldBuilder = newStarfieldBuilder
 
+        buildNearEarthAsteroids(
+            parentNode: root,
+            date: date
+        )
+
+        debugPlanetDistances(for: date)
+
         return root
     }
 
+    // ============================================================
+    // MARK: - NEAR-EARTH ASTEROIDS
+    // ============================================================
+
+    func setNearEarthAsteroidsVisible(_ visible: Bool) {
+        nearEarthAsteroidsVisible = visible
+
+        for builder in nearEarthAsteroidBuilders {
+            builder.setVisible(visible)
+        }
+    }
+
+    private func buildNearEarthAsteroids(parentNode: SCNNode, date: Date) {
+        printLog("---------- \((moduleName.last)?.components(separatedBy: ".").first ?? "") / \(#function) ----------")
+
+        nearEarthAsteroidBuilders.removeAll()
+
+        for asteroid in NearEarthAsteroidData.all {
+
+//#if DEBUG
+//print("NEA BUILDER INPUT | SolarSystemBuilder displayMode: \(displayMode.rawValue)")
+//#endif
+
+            let builder = NearEarthAsteroidBuilder(asteroid: asteroid, displayMode: displayMode)
+
+            // Moving asteroid body + label.
+            parentNode.addChildNode(builder.rootNode)
+
+            // Fixed trajectory through which the asteroid moves.
+            // Currently generated only for Earth-Moon Scale.
+            if let trajectory = builder.trajectory {
+                parentNode.addChildNode(trajectory)
+            }
+
+            builder.setVisible(nearEarthAsteroidsVisible)
+            nearEarthAsteroidBuilders.append(builder)
+
+            // Put the asteroid at the correct position for the current date.
+            builder.update(for: date)
+        }
+
+#if DEBUG
+let neaNodes = parentNode.childNodes.filter {
+    $0.name?.hasPrefix("nea-") == true
+}
+
+print("")
+print("================ NEA SCENE CHECK ======================")
+print("Display mode: \(displayMode.rawValue)")
+print("NEA moving root nodes: \(neaNodes.count)")
+
+for node in neaNodes {
+    print("NEA root: \(node.name ?? "[unnamed]")")
+}
+
+print("=======================================================")
+print("")
+#endif
+        
+    }
+
+    
     // ============================================================
     // MARK: - PLANET DISPLAY SCALE
     // ============================================================
 
     private func planetDisplayRadius(for planet: Planet, date: Date) -> CGFloat {
-
         let usesAUOrbitSpacing =
             displayMode == .astronomicalDistances ||
+            displayMode == .realisticSpacing ||
             displayMode == .trueBodiesAstronomicalDistances
 
         if usesAUOrbitSpacing,
-           let elements = PlanetAstronomy.currentElements(
-                for: planet.name,
-                date: date
-           ) {
+           let elements = PlanetAstronomy.currentElements(for: planet.name, date: date) {
+
+            if displayMode == .realisticSpacing {
+                return CGFloat(elements.a) * realisticAstronomicalUnitsToSceneUnits
+            }
 
             return CGFloat(elements.a) * displayScale.astronomicalUnitsToSceneUnits
         }
 
         return CGFloat(planet.position.x)
     }
-    
+
     // ============================================================
     // MARK: - TRUE BODY SCALE DISPLAY
     // ============================================================
@@ -269,6 +344,24 @@ final class SolarSystemBuilder {
 
     private let trueSunDiameterKM: Double = 1_391_400.0
     private let trueSunDisplayRadius: CGFloat = 0.25
+
+    // ============================================================
+    // MARK: - REALISTIC ORBIT SPACING
+    // ============================================================
+
+    // Mean astronomical unit in kilometres.
+    private let astronomicalUnitKM: Double = 149_597_870.7
+
+    // 1.0 = true physical Sun/orbit distance relationship.
+    // 0.25 = 25% of true distance, retaining the enormous sense of scale
+    // while keeping the Solar System practical to navigate in AR.
+    private let realisticOrbitDistanceCompression: CGFloat = 0.25
+
+    private var realisticAstronomicalUnitsToSceneUnits: CGFloat {
+        let sunRadiusKM = trueSunDiameterKM / 2.0
+        let sunRadiiPerAU = astronomicalUnitKM / sunRadiusKM
+        return trueSunDisplayRadius * CGFloat(sunRadiiPerAU) * realisticOrbitDistanceCompression
+    }
 
     private let physicalBodyDiametersKM: [String: Double] = [
 
@@ -414,7 +507,7 @@ final class SolarSystemBuilder {
         // Orbital positions remain adaptively scaled by moonSystemScale(),
         // but the physical moon spheres are deliberately exaggerated so
         // they remain visible alongside the much larger AU planet spacing.
-        if displayMode == .astronomicalDistances {
+        if displayMode == .astronomicalDistances || displayMode == .realisticSpacing {
 
             // Earth's Moon is stored relatively large for the normal
             // compact display. Reduce it separately in AU Orbit Spacing
@@ -432,7 +525,7 @@ final class SolarSystemBuilder {
                 0.0015
             )
         }
-        
+
         return max(
             moon.radius * displayScale.moonRadiusScale,
             displayScale.minimumMoonRadius
@@ -505,6 +598,7 @@ final class SolarSystemBuilder {
     private func nearestPlanetOrbitGap(for parentPlanet: Planet, date: Date) -> CGFloat? {
 
         guard displayMode == .astronomicalDistances ||
+              displayMode == .realisticSpacing ||
               displayMode == .trueBodiesAstronomicalDistances else {
             return nil
         }
@@ -529,11 +623,11 @@ final class SolarSystemBuilder {
     private func moonSystemScale(for parentPlanet: Planet, date: Date) -> Float {
 
         guard displayMode == .astronomicalDistances ||
+              displayMode == .realisticSpacing ||
               displayMode == .trueBodiesAstronomicalDistances else {
-
             return 1.0
         }
-        
+
         let largestOriginalOrbit = parentPlanet.moons
             .map { CGFloat(abs($0.position.x)) }
             .max() ?? 0.0
@@ -828,11 +922,12 @@ final class SolarSystemBuilder {
     }
 
     private var dwarfPlanetDistanceScale: Float {
+        if displayMode == .realisticSpacing {
+            return Float(realisticAstronomicalUnitsToSceneUnits / 0.25)
+        }
 
         if displayMode == .trueBodiesAstronomicalDistances {
-            return Float(
-                displayScale.astronomicalUnitsToSceneUnits / 0.25
-            )
+            return Float(displayScale.astronomicalUnitsToSceneUnits / 0.25)
         }
 
         return 1.0
@@ -848,7 +943,7 @@ final class SolarSystemBuilder {
             position.z * scale
         )
     }
-    
+
     // ============================================================
     // MARK: - DWARF PLANET
     // ============================================================
@@ -1031,7 +1126,7 @@ final class SolarSystemBuilder {
             isMoon: true,
             displayMode: displayMode
         )
-        
+
         moonSystemNode.addChildNode(
             label
         )
@@ -1395,6 +1490,125 @@ final class SolarSystemBuilder {
         }
 
         print("====================================================")
+        print("")
+    }
+
+    // ============================================================
+    // MARK: - DEBUG PRINT
+    // ============================================================
+
+    private func debugPlanetDistances(for date: Date) {
+
+        print("")
+        print("================ DISPLAY MODE DISTANCES =====================")
+        print("Mode: \(displayMode.title)")
+        print("-------------------------------------------------------------")
+
+        if displayMode == .earthMoon {
+
+            guard let earth = planetNodes.first(where: { $0.planet.name.lowercased() == "earth" }) else {
+                print("Earth node not found")
+                print("=============================================================")
+                print("")
+                return
+            }
+
+            guard let moon = moonNodes.first(where: {
+                $0.moon.name.lowercased() == "moon" &&
+                $0.parentPlanetName.lowercased() == "earth"
+            }) else {
+                print("Moon node not found")
+                print("=============================================================")
+                print("")
+                return
+            }
+
+            let earthPosition = earth.systemNode.simdWorldPosition
+            let moonPosition = moon.systemNode.simdWorldPosition
+            let earthMoonVector = moonPosition - earthPosition
+            let renderedDistance = Double(simd_length(earthMoonVector))
+
+            let earthRadius = Double(planetBodyRadius(for: earth.planet))
+            let moonRadius = Double(moonBodyRadius(for: moon.moon))
+
+            let renderedRadiusRatio = moonRadius / earthRadius
+            let physicalRadiusRatio = moonPhysicalRadiusKM / earthPhysicalRadiusKM
+
+            let renderedDistanceInEarthRadii = renderedDistance / earthRadius
+            let physicalDistanceInEarthRadii = moonMeanDistanceKM / earthPhysicalRadiusKM
+
+            print(String(format: "Earth radius:                    %.6f m", earthRadius))
+            print(String(format: "Moon radius:                     %.6f m", moonRadius))
+            print(String(format: "Rendered Earth-Moon distance:    %.6f m", renderedDistance))
+            print("")
+            print(String(format: "Rendered Moon/Earth radius ratio: %.6f", renderedRadiusRatio))
+            print(String(format: "Physical Moon/Earth radius ratio: %.6f", physicalRadiusRatio))
+            print("")
+            print(String(format: "Rendered distance:               %.3f Earth radii", renderedDistanceInEarthRadii))
+            print(String(format: "Physical mean distance:           %.3f Earth radii", physicalDistanceInEarthRadii))
+            print("=============================================================")
+            print("")
+            return
+        }
+
+        for entry in planetNodes {
+
+            let planet = entry.planet
+
+            if planet.name.lowercased() == "sun" {
+                print("Sun      | rendered:     0.000 m")
+                continue
+            }
+
+            let position = entry.systemNode.position
+
+            let actualDistance = sqrt(
+                Double(position.x * position.x) +
+                Double(position.y * position.y) +
+                Double(position.z * position.z)
+            )
+
+            if let elements = PlanetAstronomy.currentElements(for: planet.name, date: date) {
+
+                if displayMode == .realisticSpacing {
+
+                    let actualAU = actualDistance / Double(realisticAstronomicalUnitsToSceneUnits)
+
+                    print(
+                        String(
+                            format: "%-8@ | a: %7.3f AU | current: %7.3f AU | rendered: %8.2f m",
+                            planet.name as NSString,
+                            elements.a,
+                            actualAU,
+                            actualDistance
+                        )
+                    )
+
+                } else {
+
+                    print(
+                        String(
+                            format: "%-8@ | a: %7.3f AU | rendered: %8.3f m",
+                            planet.name as NSString,
+                            elements.a,
+                            actualDistance
+                        )
+                    )
+                }
+
+            } else {
+
+                print(
+                    String(
+                        format: "%-8@ | rendered: %8.3f m",
+                        planet.name as NSString,
+                        actualDistance
+                    )
+                )
+            }
+        }
+
+        print("=============================================================")
         print("")
     }
 
@@ -1856,78 +2070,72 @@ final class SolarSystemBuilder {
     // MARK: - MOON ORBIT VISUAL
     // ============================================================
 
-    private func createMoonOrbitVisual(
-        for moon: Moon,
-        parentPlanet: Planet,
-        date: Date
-    ) -> SCNNode {
+    // ============================================================
+    // MARK: - MOON ORBIT VISUAL
+    // ============================================================
+
+    private func createMoonOrbitVisual(for moon: Moon, parentPlanet: Planet, date: Date) -> SCNNode {
         printLog("---------- \((moduleName.last)?.components(separatedBy: ".").first ?? "") / \(#function) ----------")
 
-        let orbitNode =
-            SCNNode()
+        let orbitNode = SCNNode()
+        orbitNode.name = "\(moon.name)_orbit"
 
-        orbitNode.name =
-            "\(moon.name)_orbit"
+        let points = 192
+        let localScale = moonPositionScale(for: moon, parentPlanet: parentPlanet, date: date)
 
-        let points =
-            192
-
-        let localScale = moonPositionScale(
-            for: moon,
-            parentPlanet: parentPlanet,
-            date: date
-        )
-
-        var vertices: [SCNVector3] =
-            []
-
-        vertices.reserveCapacity(
-            points + 1
-        )
+        var vertices: [SCNVector3] = []
+        vertices.reserveCapacity(points + 1)
 
         // ============================================================
         // EARTH'S MOON
         //
-        // Earth's Moon now uses the higher-accuracy EarthMoonAstronomy
-        // ephemeris for its displayed position.
+        // Earth's Moon uses the same high-accuracy EarthMoonAstronomy
+        // model for both its displayed position and its visible orbit.
         //
-        // Therefore its visible orbit must be generated from the same
-        // astronomy model rather than the old generic Kepler ellipse.
+        // The trajectory is sampled across one sidereal lunar period,
+        // centred on the current simulation date. This ensures that the
+        // current Moon position is exactly represented by the midpoint
+        // of the displayed trajectory.
         // ============================================================
 
-        if parentPlanet.name.lowercased() == "earth" &&
-           moon.name.lowercased() == "moon" {
-
-            let siderealPeriodDays =
-                27.321661
+        if parentPlanet.name.lowercased() == "earth" && moon.name.lowercased() == "moon" {
+            let siderealPeriodDays = 27.321661
+            let halfPeriodSeconds = siderealPeriodDays * 86400.0 / 2.0
 
             for index in 0...points {
+                let fraction = Double(index) / Double(points)
+                let timeOffset = (fraction * 2.0 - 1.0) * halfPeriodSeconds
+                let sampleDate = date.addingTimeInterval(timeOffset)
 
-                let fraction =
-                    Double(index)
-                    / Double(points)
-
-                let sampleDate =
-                    date.addingTimeInterval(
-                        fraction
-                        * siderealPeriodDays
-                        * 86400.0
-                    )
-
-                let point =
-                    EarthMoonAstronomy.displayPosition(
-                        for: moon,
-                        date: sampleDate
-                    )
-
-                vertices.append(
-                    SCNVector3(
-                        point.x * localScale,
-                        point.y * localScale,
-                        point.z * localScale
-                    )
-                )
+                let point = EarthMoonAstronomy.displayPosition(for: moon, date: sampleDate)
+                vertices.append(SCNVector3(point.x * localScale, point.y * localScale, point.z * localScale))
             }
+
+            // Diagnostic: because 192 is even, vertex 96 is exactly the
+            // simulation date. Verify that it matches the displayed Moon.
+            #if DEBUG
+            let displayedMoonPosition = scaledMoonPosition(
+                MoonAstronomy.orbitalPosition(for: moon, parentPlanetName: parentPlanet.name, date: date),
+                moon: moon,
+                for: parentPlanet,
+                date: date
+            )
+
+            let midpoint = vertices[points / 2]
+            let dx = Double(midpoint.x - displayedMoonPosition.x)
+            let dy = Double(midpoint.y - displayedMoonPosition.y)
+            let dz = Double(midpoint.z - displayedMoonPosition.z)
+            let difference = sqrt(dx * dx + dy * dy + dz * dz)
+
+            print("")
+            print("================ EARTH-MOON ORBIT TEST =================")
+            print("Date: \(date)")
+            print(String(format: "Moon position : %.9f  %.9f  %.9f", displayedMoonPosition.x, displayedMoonPosition.y, displayedMoonPosition.z))
+            print(String(format: "Orbit midpoint: %.9f  %.9f  %.9f", midpoint.x, midpoint.y, midpoint.z))
+            print(String(format: "Difference    : %.12f scene units", difference))
+            print("========================================================")
+            print("")
+            #endif
 
         } else {
 
@@ -1938,102 +2146,34 @@ final class SolarSystemBuilder {
             // ========================================================
 
             for index in 0...points {
-
-                let eccentricAnomaly =
-                    Double(index)
-                    / Double(points)
-                    * Double.pi
-                    * 2.0
-
-                let point =
-                    MoonAstronomy.orbitPoint(
-                        for: moon,
-                        parentPlanetName: parentPlanet.name,
-                        eccentricAnomaly: eccentricAnomaly,
-                        date: date
-                    )
-
-                vertices.append(
-                    SCNVector3(
-                        point.x * localScale,
-                        point.y * localScale,
-                        point.z * localScale
-                    )
-                )
+                let eccentricAnomaly = Double(index) / Double(points) * Double.pi * 2.0
+                let point = MoonAstronomy.orbitPoint(for: moon, parentPlanetName: parentPlanet.name, eccentricAnomaly: eccentricAnomaly, date: date)
+                vertices.append(SCNVector3(point.x * localScale, point.y * localScale, point.z * localScale))
             }
         }
 
-        let source =
-            SCNGeometrySource(
-                vertices: vertices
-            )
+        let source = SCNGeometrySource(vertices: vertices)
 
-        var indices: [Int32] =
-            []
+        var indices: [Int32] = []
 
         for index in 0..<points {
-
-            indices.append(
-                Int32(index)
-            )
-
-            indices.append(
-                Int32(index + 1)
-            )
+            indices.append(Int32(index))
+            indices.append(Int32(index + 1))
         }
 
-        let data =
-            Data(
-                bytes: indices,
-                count:
-                    indices.count
-                    * MemoryLayout<Int32>.size
-            )
+        let data = Data(bytes: indices, count: indices.count * MemoryLayout<Int32>.size)
+        let element = SCNGeometryElement(data: data, primitiveType: .line, primitiveCount: points, bytesPerIndex: MemoryLayout<Int32>.size)
+        let geometry = SCNGeometry(sources: [source], elements: [element])
 
-        let element =
-            SCNGeometryElement(
-                data: data,
-                primitiveType: .line,
-                primitiveCount: points,
-                bytesPerIndex:
-                    MemoryLayout<Int32>.size
-            )
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.red
+        material.emission.contents = UIColor.red
+        material.lightingModel = .constant
+        material.transparency = 1.0
+        material.isDoubleSided = true
 
-        let geometry =
-            SCNGeometry(
-                sources: [
-                    source
-                ],
-                elements: [
-                    element
-                ]
-            )
-
-        let material =
-            SCNMaterial()
-
-        material.diffuse.contents =
-            UIColor.red
-
-        material.emission.contents =
-            UIColor.red
-
-        material.lightingModel =
-            .constant
-
-        material.transparency =
-            1.0
-
-        material.isDoubleSided =
-            true
-
-        geometry.materials =
-            [
-                material
-            ]
-
-        orbitNode.geometry =
-            geometry
+        geometry.materials = [material]
+        orbitNode.geometry = geometry
 
         return orbitNode
     }
@@ -2842,7 +2982,7 @@ final class SolarSystemBuilder {
                 !visible || !planetOrbitsVisible
         }
     }
-    
+
     func setPlanetOrbitsVisible(
         _ visible: Bool
     ) {
@@ -3288,7 +3428,7 @@ final class SolarSystemBuilder {
                     for: date
                 )
         }
-        
+
         // --------------------------------------------------------
         // Dwarf planets
         // --------------------------------------------------------
@@ -3337,7 +3477,7 @@ final class SolarSystemBuilder {
                 )
             )
         }
-        
+
         // --------------------------------------------------------
         // Comets
         // --------------------------------------------------------
@@ -3369,7 +3509,114 @@ final class SolarSystemBuilder {
         // logPlanetOrientationTests(for: date)
         // logPlanetPositionTests(for: date)
         // logOrbitalModelComparison(for: date)
+
+        for builder in nearEarthAsteroidBuilders {
+            builder.update(for: date)
+        }
+
     }
+
+#if DEBUG
+func debugEarthMoonOrbitAlignment(for date: Date) {
+    guard let item = moonNodes.first(where: {
+        $0.parentPlanetName.lowercased() == "earth" &&
+        $0.moon.name.lowercased() == "moon"
+    }) else {
+        print("EARTH-MOON DEBUG: Moon not found")
+        return
+    }
+
+    guard let earth = planetNodes.first(where: {
+        $0.planet.name.lowercased() == "earth"
+    })?.planet else {
+        print("EARTH-MOON DEBUG: Earth not found")
+        return
+    }
+
+    let moonPosition = scaledMoonPosition(
+        MoonAstronomy.orbitalPosition(
+            for: item.moon,
+            parentPlanetName: "Earth",
+            date: date
+        ),
+        moon: item.moon,
+        for: earth,
+        date: date
+    )
+
+    let localScale = moonPositionScale(
+        for: item.moon,
+        parentPlanet: earth,
+        date: date
+    )
+
+    let astronomyPosition = EarthMoonAstronomy.displayPosition(
+        for: item.moon,
+        date: date
+    )
+
+    let orbitPosition = SCNVector3(
+        astronomyPosition.x * localScale,
+        astronomyPosition.y * localScale,
+        astronomyPosition.z * localScale
+    )
+
+    let dx = Double(orbitPosition.x - moonPosition.x)
+    let dy = Double(orbitPosition.y - moonPosition.y)
+    let dz = Double(orbitPosition.z - moonPosition.z)
+    let difference = sqrt(dx * dx + dy * dy + dz * dz)
+
+    print("")
+    print("================ EARTH-MOON ORBIT TEST =================")
+    print("Date: \(date)")
+    print(String(format: "Moon position : %.9f  %.9f  %.9f", moonPosition.x, moonPosition.y, moonPosition.z))
+    print(String(format: "Orbit position: %.9f  %.9f  %.9f", orbitPosition.x, orbitPosition.y, orbitPosition.z))
+    print(String(format: "Difference    : %.12f scene units", difference))
+    print("========================================================")
+    print("")
+}
+#endif
+
+#if DEBUG
+func rebuildEarthMoonOrbit(for date: Date) {
+    guard let item = moonNodes.first(where: {
+        $0.parentPlanetName.lowercased() == "earth" &&
+        $0.moon.name.lowercased() == "moon"
+    }) else {
+        print("EARTH-MOON ORBIT REBUILD: Moon not found")
+        return
+    }
+
+    guard let earth = planetNodes.first(where: {
+        $0.planet.name.lowercased() == "earth"
+    })?.planet else {
+        print("EARTH-MOON ORBIT REBUILD: Earth not found")
+        return
+    }
+
+    // Remove the trajectory generated for the previous epoch.
+    item.orbitPlaneNode.childNode(
+        withName: "\(item.moon.name)_orbit",
+        recursively: false
+    )?.removeFromParentNode()
+
+    // Generate a new trajectory centred on the requested date.
+    let newOrbit = createMoonOrbitVisual(
+        for: item.moon,
+        parentPlanet: earth,
+        date: date
+    )
+
+    item.orbitPlaneNode.addChildNode(newOrbit)
+
+    print("")
+    print("================ EARTH-MOON ORBIT REBUILT =============")
+    print("Date: \(date)")
+    print("Orbit geometry regenerated around current epoch")
+    print("========================================================")
+    print("")
+}
+#endif
 
     // ============================================================
     // MARK: - REMOVE
@@ -3383,6 +3630,8 @@ final class SolarSystemBuilder {
 
         majorAsteroidBuilder?.remove()
         majorAsteroidBuilder = nil
+
+        nearEarthAsteroidBuilders.removeAll()
 
         rootNode?.removeFromParentNode()
         rootNode = nil
@@ -3401,3 +3650,4 @@ final class SolarSystemBuilder {
         vanAllenBeltBuilder = nil
     }
 }
+

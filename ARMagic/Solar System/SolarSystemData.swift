@@ -10,7 +10,7 @@ enum SolarSystemData {
     static let moduleName = (#file).components(separatedBy: "/")
 
     static func planets() -> [Planet] {
-        printLog("---------- \((moduleName.last)?.components(separatedBy: ".").first ?? "") / \(#function) ----------")
+        //printLog("---------- \((moduleName.last)?.components(separatedBy: ".").first ?? "") / \(#function) ----------")
 
         // ========================================================
         // EARTH

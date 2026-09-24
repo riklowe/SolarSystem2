@@ -178,19 +178,19 @@ class GameViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
 
         button.titleLabel?.font =
-            UIFont.systemFont(
-                ofSize: 28,
-                weight: .medium
-            )
+        UIFont.systemFont(
+            ofSize: 28,
+            weight: .medium
+        )
 
         button.backgroundColor =
-            UIColor.black.withAlphaComponent(0.70)
+        UIColor.black.withAlphaComponent(0.70)
 
         button.layer.cornerRadius = 22
         button.layer.masksToBounds = true
 
         button.accessibilityLabel =
-            "Display settings"
+        "Display settings"
 
         button.addTarget(
             self,
@@ -220,10 +220,10 @@ class GameViewController: UIViewController {
         setupDisplaySettings()
 
         let tapGestureRecognizer =
-            UITapGestureRecognizer(
-                target: self,
-                action: #selector(handleTap)
-            )
+        UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleTap)
+        )
 
         arView.addGestureRecognizer(
             tapGestureRecognizer
@@ -242,8 +242,101 @@ class GameViewController: UIViewController {
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
+
+#if DEBUG
+        //downloadApophisEphemeris()
+        //downloadApophisLongTermEphemeris()
+        testApophisEphemeris()
+        //downloadEarthEncounterEphemeris()
+        NearEarthAsteroidAstronomy.debugApophis2029Encounter()
+        NearEarthAsteroidAstronomy.debugApophisLongTermOrbitChange()
+#endif
+
     }
 
+#if DEBUG
+    private func jumpToApophisEncounter() {
+
+        var components = DateComponents()
+        components.calendar = Calendar(identifier: .gregorian)
+        components.timeZone = TimeZone(secondsFromGMT: 0)
+        components.year = 2029
+        components.month = 4
+        components.day = 13
+        components.hour = 20
+        components.minute = 30
+        components.second = 0
+
+        guard let date = components.date else {
+            return
+        }
+
+        simulationClock.jump(to: date)
+
+        // 180x means three simulated minutes pass for every real second.
+        // The 90-minute 20:30 -> 22:00 encounter therefore takes ~30 seconds.
+        let encounterSpeed = 1.0 / 240.0
+
+        simulationClock.setSpeed(encounterSpeed)
+        simulationClock.resume()
+
+        selectedSimulationSpeed = encounterSpeed
+        simulationPaused = false
+
+        pauseButton.setTitle("⏸", for: .normal)
+        simulationSpeedLabel.text = "APOPHIS FLYBY"
+
+        solarSystemBuilder?.update(for: date)
+
+        #if DEBUG
+        solarSystemBuilder?.rebuildEarthMoonOrbit(for: date)
+        solarSystemBuilder?.debugEarthMoonOrbitAlignment(for: date)
+        #endif
+
+        updateSimulationDateLabel()
+
+        print("")
+        print("================ APOPHIS FLYBY TEST ==================")
+        print("Start: 13 Apr 2029 20:30:00 UTC")
+        print("Speed: 3 simulated minutes per real second")
+        print("Closest approach: approximately 21:46")
+        print("======================================================")
+        print("")
+    }
+#endif
+
+#if DEBUG
+private func downloadApophisLongTermEphemeris() {
+
+    HorizonsEphemerisDownloader.downloadApophisLongTerm { result in
+
+        switch result {
+
+        case .success(let ephemeris):
+
+            do {
+                let url = try HorizonsEphemerisDownloader.writeApophisLongTermJSON(ephemeris)
+
+                print("")
+                print("================ APOPHIS LONG-TERM EPHEMERIS =========")
+                print("Points: \(ephemeris.points.count)")
+                print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
+                print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
+                print("JSON: \(url.path)")
+                print("=======================================================")
+                print("")
+
+            } catch {
+                print("Failed writing Apophis long-term ephemeris: \(error)")
+            }
+
+        case .failure(let error):
+            print("Apophis long-term Horizons download failed: \(error)")
+        }
+    }
+}
+#endif
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -265,7 +358,7 @@ class GameViewController: UIViewController {
         arView.session.delegate = self
 
         arView.scene.background.contents =
-            UIColor.black
+        UIColor.black
 
         arView.backgroundColor = .black
 
@@ -343,13 +436,13 @@ class GameViewController: UIViewController {
         )
 
         button.titleLabel?.font =
-            UIFont.systemFont(
-                ofSize: 16,
-                weight: .semibold
-            )
+        UIFont.systemFont(
+            ofSize: 16,
+            weight: .semibold
+        )
 
         button.backgroundColor =
-            UIColor.black.withAlphaComponent(0.55)
+        UIColor.black.withAlphaComponent(0.55)
 
         button.layer.cornerRadius = 8
 
@@ -369,16 +462,16 @@ class GameViewController: UIViewController {
         setTimeControlsEnabled(false)
 
         let buttonStack =
-            UIStackView(
-                arrangedSubviews: [
-                    reverseFastButton,
-                    reverseButton,
-                    pauseButton,
-                    forwardButton,
-                    forwardFastButton,
-                    nowButton
-                ]
-            )
+        UIStackView(
+            arrangedSubviews: [
+                reverseFastButton,
+                reverseButton,
+                pauseButton,
+                forwardButton,
+                forwardFastButton,
+                nowButton
+            ]
+        )
 
         buttonStack.axis = .horizontal
         buttonStack.spacing = 6
@@ -387,12 +480,12 @@ class GameViewController: UIViewController {
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
 
         let containerStack =
-            UIStackView(
-                arrangedSubviews: [
-                    simulationSpeedLabel,
-                    buttonStack
-                ]
-            )
+        UIStackView(
+            arrangedSubviews: [
+                simulationSpeedLabel,
+                buttonStack
+            ]
+        )
 
         containerStack.axis = .vertical
         containerStack.spacing = 5
@@ -419,7 +512,7 @@ class GameViewController: UIViewController {
         nowButton.isEnabled = enabled
 
         let alpha: CGFloat =
-            enabled ? 1.0 : 0.35
+        enabled ? 1.0 : 0.35
 
         reverseFastButton.alpha = alpha
         reverseButton.alpha = alpha
@@ -471,7 +564,7 @@ class GameViewController: UIViewController {
         }
 
         selectedDisplayMode =
-            displaySettingsView.currentDisplayMode()
+        displaySettingsView.currentDisplayMode()
     }
 
     // ============================================================
@@ -524,7 +617,7 @@ class GameViewController: UIViewController {
                 .setPlutoVisible(
                     visible
                 )
-            
+
         case .planetOrbits:
             solarSystemBuilder?
                 .setPlanetOrbitsVisible(
@@ -621,6 +714,10 @@ class GameViewController: UIViewController {
                     visible
                 )
 
+        case .nearEarthAsteroids:
+            solarSystemBuilder?
+                .setNearEarthAsteroidsVisible(visible)
+
         case .vanAllenBelts:
             solarSystemBuilder?
                 .setVanAllenBeltsVisible(
@@ -629,7 +726,7 @@ class GameViewController: UIViewController {
         }
 
         let elapsed =
-            CFAbsoluteTimeGetCurrent() - start
+        CFAbsoluteTimeGetCurrent() - start
 
         printLog(
             "DISPLAY SETTING END: \(setting) elapsed=\(String(format: "%.4f", elapsed))s"
@@ -650,7 +747,7 @@ class GameViewController: UIViewController {
         }
 
         selectedDisplayMode =
-            mode
+        mode
 
         rebuildSolarSystemForDisplayMode()
     }
@@ -665,27 +762,27 @@ class GameViewController: UIViewController {
         solarSystemBuilder?.remove()
 
         solarSystemBuilder =
-            nil
+        nil
 
         let builder =
-            SolarSystemBuilder(
-                scene: arView.scene,
-                simulationClock: simulationClock,
-                displayMode: selectedDisplayMode
-            )
+        SolarSystemBuilder(
+            scene: arView.scene,
+            simulationClock: simulationClock,
+            displayMode: selectedDisplayMode
+        )
 
         solarSystemBuilder =
-            builder
+        builder
 
         let solarSystemNode =
-            builder.build()
+        builder.build()
 
         solarSystemNode.position =
-            SCNVector3(
-                0,
-                0,
-                -2
-            )
+        SCNVector3(
+            0,
+            0,
+            -2
+        )
 
         arView.scene.rootNode.addChildNode(
             solarSystemNode
@@ -710,21 +807,21 @@ class GameViewController: UIViewController {
         )
 
         solarSystemBuilder =
-            SolarSystemBuilder(
-                scene: arView.scene,
-                simulationClock: simulationClock,
-                displayMode: selectedDisplayMode
-            )
+        SolarSystemBuilder(
+            scene: arView.scene,
+            simulationClock: simulationClock,
+            displayMode: selectedDisplayMode
+        )
 
         if let solarSystemNode =
             solarSystemBuilder?.build() {
 
             solarSystemNode.position =
-                SCNVector3(
-                    0,
-                    0,
-                    -2
-                )
+            SCNVector3(
+                0,
+                0,
+                -2
+            )
 
             arView.scene.rootNode.addChildNode(
                 solarSystemNode
@@ -743,7 +840,7 @@ class GameViewController: UIViewController {
         )
 
         simulationSpeedLabel.text =
-            "1×"
+        "1×"
 
         updateSimulationDateLabel()
 
@@ -764,10 +861,10 @@ class GameViewController: UIViewController {
         selectedSimulationSpeed = 1.0
 
         simulationDateLabel.text =
-            "-- --- ----   --:--:--"
+        "-- --- ----   --:--:--"
 
         simulationSpeedLabel.text =
-            "1×"
+        "1×"
 
         pauseButton.setTitle(
             "⏸",
@@ -786,9 +883,9 @@ class GameViewController: UIViewController {
     func updateSimulationDateLabel() {
 
         simulationDateLabel.text =
-            simulationDateFormatter.string(
-                from: simulationClock.currentDate
-            )
+        simulationDateFormatter.string(
+            from: simulationClock.currentDate
+        )
     }
 
     // ============================================================
@@ -802,10 +899,10 @@ class GameViewController: UIViewController {
 
         if selectedSimulationSpeed <= -10.0 {
             newSpeed =
-                selectedSimulationSpeed - 10.0
+            selectedSimulationSpeed - 10.0
         } else {
             newSpeed =
-                -10.0
+            -10.0
         }
 
         setSimulationSpeed(
@@ -820,10 +917,10 @@ class GameViewController: UIViewController {
 
         if selectedSimulationSpeed < 0.0 {
             newSpeed =
-                selectedSimulationSpeed - 1.0
+            selectedSimulationSpeed - 1.0
         } else {
             newSpeed =
-                -1.0
+            -1.0
         }
 
         setSimulationSpeed(
@@ -838,10 +935,10 @@ class GameViewController: UIViewController {
 
         if selectedSimulationSpeed > 0.0 {
             newSpeed =
-                selectedSimulationSpeed + 1.0
+            selectedSimulationSpeed + 1.0
         } else {
             newSpeed =
-                1.0
+            1.0
         }
 
         setSimulationSpeed(
@@ -856,10 +953,10 @@ class GameViewController: UIViewController {
 
         if selectedSimulationSpeed >= 10.0 {
             newSpeed =
-                selectedSimulationSpeed + 10.0
+            selectedSimulationSpeed + 10.0
         } else {
             newSpeed =
-                10.0
+            10.0
         }
 
         setSimulationSpeed(
@@ -874,7 +971,7 @@ class GameViewController: UIViewController {
             simulationClock.resume()
 
             simulationPaused =
-                false
+            false
 
             pauseButton.setTitle(
                 "⏸",
@@ -882,16 +979,16 @@ class GameViewController: UIViewController {
             )
 
             simulationSpeedLabel.text =
-                speedDescription(
-                    selectedSimulationSpeed
-                )
+            speedDescription(
+                selectedSimulationSpeed
+            )
 
         } else {
 
             simulationClock.pause()
 
             simulationPaused =
-                true
+            true
 
             pauseButton.setTitle(
                 "▶︎",
@@ -899,11 +996,16 @@ class GameViewController: UIViewController {
             )
 
             simulationSpeedLabel.text =
-                "PAUSED"
+            "PAUSED"
         }
     }
 
     @objc private func nowTapped() {
+
+#if DEBUG
+        jumpToApophisEncounter()
+        return
+#endif
 
         simulationClock.jump(
             to: Date()
@@ -916,10 +1018,10 @@ class GameViewController: UIViewController {
         simulationClock.pause()
 
         selectedSimulationSpeed =
-            1.0
+        1.0
 
         simulationPaused =
-            true
+        true
 
         pauseButton.setTitle(
             "▶︎",
@@ -927,7 +1029,7 @@ class GameViewController: UIViewController {
         )
 
         simulationSpeedLabel.text =
-            "PAUSED"
+        "PAUSED"
 
         updateSimulationDateLabel()
     }
@@ -937,7 +1039,7 @@ class GameViewController: UIViewController {
     ) {
 
         selectedSimulationSpeed =
-            speed
+        speed
 
         simulationClock.setSpeed(
             speed
@@ -948,7 +1050,7 @@ class GameViewController: UIViewController {
         }
 
         simulationPaused =
-            false
+        false
 
         pauseButton.setTitle(
             "⏸",
@@ -956,9 +1058,9 @@ class GameViewController: UIViewController {
         )
 
         simulationSpeedLabel.text =
-            speedDescription(
-                speed
-            )
+        speedDescription(
+            speed
+        )
     }
 
     private func speedDescription(
@@ -1002,45 +1104,45 @@ class GameViewController: UIViewController {
     ) -> SCNNode {
 
         let floor =
-            SCNNode()
+        SCNNode()
 
         floor.name =
-            "floor"
+        "floor"
 
         floor.eulerAngles =
-            SCNVector3(
-                Float.pi / 2.0,
-                0,
-                0
-            )
+        SCNVector3(
+            Float.pi / 2.0,
+            0,
+            0
+        )
 
         floor.geometry =
-            SCNPlane(
-                width: CGFloat(
-                    anchor.planeExtent.width
-                ),
-                height: CGFloat(
-                    anchor.planeExtent.height
-                )
+        SCNPlane(
+            width: CGFloat(
+                anchor.planeExtent.width
+            ),
+            height: CGFloat(
+                anchor.planeExtent.height
             )
+        )
 
         floor.position =
-            SCNVector3(
-                anchor.center.x,
-                anchor.center.y,
-                anchor.center.z
-            )
+        SCNVector3(
+            anchor.center.x,
+            anchor.center.y,
+            anchor.center.z
+        )
 
         floor.geometry?
             .firstMaterial?
             .diffuse
             .contents =
-            UIColor.clear
+        UIColor.clear
 
         floor.geometry?
             .firstMaterial?
             .transparency =
-            0.0
+        0.0
 
         return floor
     }
@@ -1054,18 +1156,18 @@ class GameViewController: UIViewController {
     ) {
 
         let tappedView =
-            sender.view as! SCNView
+        sender.view as! SCNView
 
         let touchLocation =
-            sender.location(
-                in: tappedView
-            )
+        sender.location(
+            in: tappedView
+        )
 
         let hitTest =
-            tappedView.hitTest(
-                touchLocation,
-                options: nil
-            )
+        tappedView.hitTest(
+            touchLocation,
+            options: nil
+        )
 
         if let result =
             hitTest.first {
@@ -1075,6 +1177,97 @@ class GameViewController: UIViewController {
             )
         }
     }
+
+#if DEBUG
+    private func downloadApophisEphemeris() {
+
+        HorizonsEphemerisDownloader.downloadApophisEncounter { result in
+
+            switch result {
+
+            case .success(let ephemeris):
+
+                do {
+                    let url = try HorizonsEphemerisDownloader.writeJSON(ephemeris)
+
+                    print("")
+                    print("================ APOPHIS EPHEMERIS =================")
+                    print("Points: \(ephemeris.points.count)")
+                    print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
+                    print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
+                    print("JSON: \(url.path)")
+                    print("=====================================================")
+                    print("")
+
+                } catch {
+                    print("Failed writing Apophis ephemeris: \(error)")
+                }
+
+            case .failure(let error):
+                print("Apophis Horizons download failed: \(error)")
+            }
+        }
+    }
+#endif
+
+#if DEBUG
+    private func testApophisEphemeris() {
+
+        NearEarthAsteroidAstronomy.debugEphemeris(for: NearEarthAsteroidData.apophis)
+
+        var components = DateComponents()
+        components.calendar = Calendar(identifier: .gregorian)
+        components.timeZone = TimeZone(secondsFromGMT: 0)
+        components.year = 2029
+        components.month = 4
+        components.day = 13
+        components.hour = 21
+        components.minute = 46
+        components.second = 0
+
+        guard let date = components.date else {
+            print("Unable to create Apophis test date")
+            return
+        }
+
+        NearEarthAsteroidAstronomy.debugPosition(
+            for: NearEarthAsteroidData.apophis,
+            date: date
+        )
+    }
+#endif
+
+#if DEBUG
+private func downloadEarthEncounterEphemeris() {
+
+    HorizonsEphemerisDownloader.downloadEarthEncounter { result in
+
+        switch result {
+
+        case .success(let ephemeris):
+
+            do {
+                let url = try HorizonsEphemerisDownloader.writeEarthJSON(ephemeris)
+
+                print("")
+                print("================ EARTH EPHEMERIS ====================")
+                print("Points: \(ephemeris.points.count)")
+                print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
+                print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
+                print("JSON: \(url.path)")
+                print("=====================================================")
+                print("")
+
+            } catch {
+                print("Failed writing Earth ephemeris: \(error)")
+            }
+
+        case .failure(let error):
+            print("Earth Horizons download failed: \(error)")
+        }
+    }
+}
+#endif
 
     deinit {
 
@@ -1104,7 +1297,7 @@ extension GameViewController: ARSCNViewDelegate {
         }
 
         let date =
-            simulationClock.currentDate
+        simulationClock.currentDate
 
         solarSystemBuilder?
             .update(
@@ -1115,7 +1308,7 @@ extension GameViewController: ARSCNViewDelegate {
             [weak self] in
 
             guard let self =
-                self
+                    self
             else {
                 return
             }
@@ -1131,7 +1324,7 @@ extension GameViewController: ARSCNViewDelegate {
     ) {
 
         guard let plane =
-            anchor as? ARPlaneAnchor
+                anchor as? ARPlaneAnchor
         else {
             return
         }
@@ -1150,7 +1343,7 @@ extension GameViewController: ARSCNViewDelegate {
     ) {
 
         guard let plane =
-            anchor as? ARPlaneAnchor
+                anchor as? ARPlaneAnchor
         else {
             return
         }
@@ -1207,7 +1400,7 @@ extension GameViewController: ARSessionDelegate {
                 [weak self] in
 
                 guard let self =
-                    self
+                        self
                 else {
                     return
                 }
@@ -1238,3 +1431,4 @@ extension GameViewController: ARSessionDelegate {
         }
     }
 }
+
