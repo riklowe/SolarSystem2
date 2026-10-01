@@ -2,7 +2,7 @@
 
 AR Solar System is an iOS augmented-reality astronomy application built with Swift, ARKit and SceneKit.
 
-The project displays a dynamic 3D Solar System in AR, with date-dependent planetary positions, planetary rotation, moons, dwarf planets, comets, the Kuiper Belt, eclipses, the Van Allen radiation belts and multiple display-scale modes.
+The project displays a dynamic 3D Solar System in AR, with date-dependent planetary positions, planetary rotation, moons, dwarf planets, comets, the Kuiper Belt, Near-Earth Asteroids, eclipses, the Van Allen radiation belts and multiple display-scale modes.
 
 The aim of the project is to combine an accessible AR visualisation with progressively more accurate astronomical modelling.
 
@@ -17,21 +17,38 @@ The Solar System is rendered directly into the user's environment using ARKit an
 The scene includes:
 
 - The Sun
+
 - Mercury
+
 - Venus
+
 - Earth
+
 - Mars
+
 - Jupiter
+
 - Saturn
+
 - Uranus
+
 - Neptune
+
 - Pluto
+
 - Major moons
+
 - Dwarf planets
+
 - Comets
+
 - Kuiper Belt objects
+- Near-Earth Asteroids
+
 - Planetary rings
+
 - Planetary and lunar orbit paths
+
 - Background stars and the Milky Way
 
 The complete system can be viewed from different positions and angles by physically moving around the AR scene.
@@ -47,6 +64,7 @@ The application uses date-dependent orbital elements and solves the Kepler equat
 Two orbital models are supported:
 
 - Short-range planetary elements for approximately 1800–2050
+
 - Long-range planetary elements covering approximately 3000 BC to AD 3000
 
 The application automatically selects the appropriate model for the requested date.
@@ -62,10 +80,15 @@ Each planet rotates independently using astronomical rotation data rather than s
 The application includes:
 
 - Date-dependent prime-meridian rotation
+
 - Planetary north-pole orientation
+
 - Axial tilt
+
 - Retrograde rotation where appropriate
+
 - Absolute rotational orientation
+
 - Planet-specific rotation periods
 
 This allows the visible face of a planet to correspond to the selected astronomical date and time.
@@ -81,8 +104,11 @@ Planetary orbit paths are generated dynamically from the same orbital elements u
 The displayed orbits therefore include:
 
 - Orbital eccentricity
+
 - Inclination
+
 - Longitude of ascending node
+
 - Argument of perihelion
 
 Planetary orbit paths are displayed in green.
@@ -96,53 +122,85 @@ The application includes orbital modelling for the major moons of the Solar Syst
 Examples include:
 
 ### Earth
+
 - Moon
 
 ### Mars
+
 - Phobos
+
 - Deimos
 
 ### Jupiter
+
 - Amalthea
+
 - Io
+
 - Europa
+
 - Ganymede
+
 - Callisto
 
 ### Saturn
+
 - Mimas
+
 - Enceladus
+
 - Tethys
+
 - Dione
+
 - Rhea
+
 - Titan
+
 - Hyperion
+
 - Iapetus
+
 - Phoebe
 
 ### Uranus
+
 - Miranda
+
 - Ariel
+
 - Umbriel
+
 - Titania
+
 - Oberon
 
 ### Neptune
+
 - Proteus
+
 - Triton
+
 - Nereid
 
 ### Pluto
+
 - Charon
 
 Moon positions are date dependent and use individual orbital parameters including:
 
 - Semi-major axis
+
 - Eccentricity
+
 - Inclination
+
 - Orbital period
+
 - Ascending node
+
 - Argument of periapsis
+
 - Mean anomaly
 
 Moon orbit paths are displayed in red.
@@ -156,8 +214,11 @@ Earth's Moon uses a separate higher-accuracy lunar astronomy model rather than t
 This includes Meeus-style lunar ephemeris terms for calculating:
 
 - Lunar longitude
+
 - Lunar latitude
+
 - Earth-Moon distance
+
 - Date-dependent geocentric Moon position
 
 The visible Moon orbit is generated from the same astronomy model as the displayed Moon position so the orbit path and Moon remain consistent.
@@ -171,9 +232,13 @@ Pluto is fully integrated into the planetary system.
 The Pluto-Charon system includes:
 
 - Pluto's eccentric and inclined heliocentric orbit
+
 - Date-dependent Pluto rotation
+
 - Charon's orbital motion
+
 - Pluto-Charon barycentric movement
+
 - Synchronous tidal locking
 
 Both Pluto and Charon orbit their common centre of mass rather than treating Pluto as completely stationary.
@@ -185,15 +250,21 @@ Both Pluto and Charon orbit their common centre of mass rather than treating Plu
 In addition to Pluto, the application includes:
 
 - Ceres
+
 - Eris
+
 - Makemake
+
 - Haumea
 
 Each dwarf planet has:
 
 - Date-dependent orbital positioning
+
 - A visible orbit path
+
 - A name label
+
 - Independent display controls
 
 ---
@@ -205,8 +276,11 @@ A procedural Kuiper Belt surrounds the outer Solar System.
 The belt contains multiple simulated populations:
 
 - Cold classical objects
+
 - Hot classical objects
+
 - Resonant objects
+
 - Scattered objects
 
 Objects are generated using deterministic seeded random generation so the belt remains repeatable between runs.
@@ -220,8 +294,11 @@ The Kuiper Belt adapts its visual scale for the different Solar System display m
 The application currently includes:
 
 - Halley's Comet
+
 - Encke
+
 - 67P/Churyumov-Gerasimenko
+
 - Hale-Bopp
 
 Comet motion is calculated from orbital elements using date-dependent Keplerian motion.
@@ -229,14 +306,74 @@ Comet motion is calculated from orbital elements using date-dependent Keplerian 
 Each comet can include:
 
 - Nucleus
+
 - Coma
+
 - Anti-solar tail
+
 - Orbit path
+
 - Name label
 
 Comet activity changes with distance from the Sun.
 
 The tail direction is always calculated relative to the Sun rather than simply following the comet's direction of travel.
+
+---
+
+## Near-Earth Asteroids
+
+The application now includes a dedicated Near-Earth Asteroid (NEA) subsystem.
+
+The current objects are:
+
+- Apophis
+- 1999 AN10
+- 2001 WN5
+
+The subsystem uses JPL Horizons ephemerides to represent asteroid motion, with scientific close-approach validation kept separate from the visual scale used in AR.
+
+### JPL Horizons Ephemerides
+
+NEA trajectories use sampled ephemeris data rather than relying only on a simple repeating Keplerian orbit.
+
+The system supports two complementary trajectory representations:
+
+- Long-term heliocentric trajectories for viewing asteroid motion within the Solar System
+- Earth-relative trajectories for examining close approaches in detail
+
+The trajectory handling is generic and supports the three current NEAs rather than being limited to an Apophis-specific path.
+
+Ephemeris coverage is tied to each dataset's time range; the planetary model's wider date range does not imply equivalent NEA coverage.
+
+### Scientific Close-Approach Validation
+
+Close approaches have been checked against JPL Horizons ephemerides, including encounter timing and Earth-relative separation.
+
+Validation uses astronomical coordinates and distances before display scaling is applied. An asteroid's apparent separation in a compressed AR scene is therefore not itself a physical distance measurement.
+
+### Complete Earth-Relative Flyby Trajectories
+
+The close-approach datasets contain complete Earth-relative trajectories spanning:
+
+- 36 hours before the encounter reference time
+- 36 hours after the encounter reference time
+- Five-minute sampling intervals
+- 865 samples, including both endpoints of the 72-hour window
+
+These paths show the incoming and outgoing portions of the flyby, providing context around the closest approach rather than displaying only a short segment near Earth.
+
+### Compact-Mode Coordinate Mapping
+
+NEA coordinates are mapped into Compact mode's compressed Solar System layout.
+
+This allows asteroid positions and trajectories to be displayed consistently with the mode's Earth position while preserving the underlying ephemeris data for scientific calculations.
+
+### NEA Display Control
+
+A dedicated Near-Earth Asteroids setting controls NEA visibility and participates in the settings panel's all-on and all-off controls.
+
+The NEA encounter selector and generic encounter-jump interface are **planned next features** and are not yet implemented.
 
 ---
 
@@ -247,11 +384,17 @@ The application includes eclipse modelling using the calculated positions of the
 The eclipse system includes:
 
 - Solar eclipse geometry
+
 - Umbra calculation
+
 - Penumbra calculation
+
 - Earth surface shadow projection
+
 - Eclipse shadow rendering
+
 - Date-dependent Moon position
+
 - Earth rotation during the eclipse
 
 The model was tested against the total solar eclipse of 8 April 2024.
@@ -267,18 +410,27 @@ Earth is illuminated from the actual simulated direction of the Sun.
 The application models:
 
 - Earth's axial tilt
+
 - Planetary pole orientation
+
 - Day and night
+
 - Solar illumination direction
+
 - Seasonal geometry
+
 - Equinoxes
+
 - Solstices
 
 Optional Earth reference guides include:
 
 - Equator
+
 - Tropic of Cancer
+
 - Tropic of Capricorn
+
 - Rotation axis
 
 ---
@@ -290,6 +442,7 @@ Earth includes a visual representation of the Van Allen radiation belts.
 Two radiation regions are displayed:
 
 - Inner belt — orange
+
 - Outer belt — cyan
 
 The belts are rendered as static 3D point-cloud toroidal structures.
@@ -307,8 +460,11 @@ Ring systems are included for the outer planets.
 The application currently models rings for:
 
 - Jupiter
+
 - Saturn
+
 - Uranus
+
 - Neptune
 
 Saturn uses a multi-band semi-transparent ring structure rather than a single flat ring texture.
@@ -322,10 +478,15 @@ Ring orientation follows the planet's rotational axis.
 The application includes a generated deep-space background consisting of:
 
 - Procedural stars
+
 - Varied star brightness
+
 - Varied star size
+
 - Subtle colour variation
+
 - Illustrative Milky Way band
+
 - Dark Milky Way dust lane
 
 The background remains visually distant and does not produce translation parallax when the user moves around the AR scene.
@@ -344,15 +505,18 @@ The constellation display uses a fixed equatorial reference system.
 
 # Display Modes
 
-The app includes four different display modes because a truly scaled Solar System is extremely difficult to view in AR.
+The app includes six different display modes because a truly scaled Solar System is extremely difficult to view in AR.
 
 ## Compact
 
 Designed for practical AR use.
 
 - Enlarged planets
+
 - Enlarged moons
+
 - Compressed orbital spacing
+
 - All major Solar System objects visible within a manageable scene
 
 This is the default visualisation mode.
@@ -377,13 +541,33 @@ Planetary orbital spacing follows astronomical-unit ratios.
 
 The application uses:
 
-    1 AU = 0.25 SceneKit units
+    1 AU = 0.25 SceneKit units
 
 This preserves the relative orbital distances between the planets.
 
 Moon systems are adaptively rescaled so that they remain visible without overlapping neighbouring planetary systems.
 
 Moon body sizes are also visually enhanced so small moons remain visible at the larger planetary spacing.
+
+---
+
+## Realistic Spacing
+
+Provides an additional orbital-spacing view for exploring the Solar System's large differences in distance.
+
+This mode complements the compressed Compact layout and AU Orbit Spacing, offering another way to inspect the distribution of bodies in AR.
+
+Display spacing is a visual mapping of the astronomical positions; the mode name does not imply that every body size and distance shares one physical scale.
+
+---
+
+## True Body + AU
+
+Combines true relative body-size ratios with astronomical-unit orbital spacing.
+
+This brings the body-size and planetary-distance comparisons together in one view, making the small size of planets relative to the distances between them especially apparent.
+
+Small bodies can be difficult to see at this scale, so labels and viewpoint changes remain useful when exploring the scene.
 
 ---
 
@@ -396,16 +580,39 @@ Only Earth and the Moon are displayed.
 The mode preserves:
 
 - Real Earth-to-Moon radius ratio
+
 - Real Earth-to-Moon distance ratio
+
 - Date-dependent lunar distance variation
+
 - Higher-accuracy lunar orbital position
+
 - Earth's rotation
+
 - Lunar orbital motion
+
 - Solar illumination direction
 
 Earth remains centred in the scene while the simulated Sun direction is updated independently.
 
 This provides a much clearer demonstration of how far the Moon really is from Earth compared with the size of both bodies.
+
+---
+
+## Current Display-Mode Indicator
+
+The active display mode is continuously shown immediately below the simulation date and time on the main screen.
+
+The indicator uses the same six names as the settings panel:
+
+- Compact
+- True Body Scale
+- AU Orbit Spacing
+- Realistic Spacing
+- True Body + AU
+- Earth–Moon Scale
+
+It updates immediately when the mode changes and is initialised from the restored display-mode selection.
 
 ---
 
@@ -416,25 +623,40 @@ The Solar System can be run forward or backward through time.
 Controls include:
 
 - Pause
+
 - Forward
+
 - Reverse
+
 - Fast forward
+
 - Fast reverse
-- Return to the current date and time
+
+- NOW control for returning to the current date and time
 
 Repeated presses increase the simulation speed.
+
+**Current development status:** a temporary DEBUG-only Apophis encounter jump remains associated with the NOW workflow in the latest reviewed controller. Restoring NOW to its normal current-date function and removing this temporary behaviour is the next cleanup step, before adding the dedicated NEA encounter selector.
 
 The selected date and time are continuously displayed at the top of the screen.
 
 As simulation time changes, the application updates:
 
 - Planet positions
+
 - Planet rotation
+
 - Moon positions
+
 - Moon rotation
+
 - Comet positions
+- NEA positions within their available ephemeris coverage
+
 - Dwarf planets
+
 - Eclipse geometry
+
 - Solar illumination
 
 ---
@@ -446,24 +668,44 @@ A settings panel allows individual scene components to be enabled or disabled.
 Controls include:
 
 - Planets
+
 - Moons
+
 - Dwarf planets
+
 - Planet orbits
+
 - Moon orbits
+
 - Dwarf planet orbits
+
 - Planet labels
+
 - Moon labels
+
 - Dwarf planet labels
+
 - Planetary rings
+
 - Kuiper Belt
+
 - Comets
+
 - Comet tails
+
 - Comet orbits
+
 - Comet labels
+- Near-Earth Asteroids
+
 - Stars
+
 - Milky Way
+
 - Zodiac constellations
+
 - Earth reference lines
+
 - Van Allen radiation belts
 
 Settings are stored using `UserDefaults` and restored when the application is reopened.
@@ -477,8 +719,15 @@ Planet, moon and dwarf-planet labels automatically adapt to the selected display
 Different font scales and offsets are used for:
 
 - Compact
+
 - True Body Scale
+
 - AU Orbit Spacing
+
+- Realistic Spacing
+
+- True Body + AU
+
 - Earth-Moon Scale
 
 This helps keep very small bodies readable while avoiding excessively large labels in close-up views.
@@ -490,32 +739,58 @@ This helps keep very small bodies readable while avoiding excessively large labe
 The project is primarily written in Swift and uses:
 
 - Swift
+
 - ARKit
+
 - SceneKit
+
 - UIKit
+
 - SIMD mathematics
 
 The codebase separates astronomy calculations from SceneKit rendering.
 
 Major components include:
 
-    SolarSystemBuilder
-    SolarSystemData
-    PlanetAstronomy
-    MoonAstronomy
-    EarthMoonAstronomy
-    DwarfPlanetAstronomy
-    CometAstronomy
-    CometBuilder
-    KuiperBelt
-    StarfieldBuilder
-    EclipseAstronomy
-    EclipseShadowRenderer
-    VanAllenBeltBuilder
-    SceneFactory
-    SimulationClock
+    SolarSystemBuilder
+
+    SolarSystemData
+
+    PlanetAstronomy
+
+    MoonAstronomy
+
+    EarthMoonAstronomy
+
+    DwarfPlanetAstronomy
+
+    CometAstronomy
+
+    CometBuilder
+
+    KuiperBelt
+
+    StarfieldBuilder
+
+    EclipseAstronomy
+
+    EclipseShadowRenderer
+
+    VanAllenBeltBuilder
+
+    SceneFactory
+
+    SimulationClock
+
+The NEA subsystem adds ephemeris-data handling, generic heliocentric and Earth-relative trajectory processing, close-approach validation and display-coordinate mapping.
 
 This separation allows astronomical calculations to evolve independently from the AR rendering layer.
+
+## UIScene Lifecycle
+
+The application has migrated to the UIKit `UIScene` lifecycle for scene and window management.
+
+This updates the application lifecycle architecture alongside the existing ARKit, SceneKit and UIKit rendering and control layers.
 
 ---
 
@@ -534,15 +809,25 @@ A major design goal of the project is balancing astronomical accuracy with pract
 A completely true-scale Solar System would be almost impossible to view conveniently in an AR environment because:
 
 - Planets are extremely small compared with the Sun
+
 - Distances between planets are enormous
+
 - Moons would often be invisible
+
 - Planetary systems would occupy very different scales
 
 The different display modes therefore allow the user to choose between:
 
 - Practical visualisation
+
 - Relative body-size accuracy
+
 - Relative orbital-distance accuracy
+
+- Combined true relative body sizes and AU orbital spacing
+
+- Ephemeris-based NEA trajectories and close-approach exploration
+
 - Focused Earth-Moon physical scale
 
 Where visual exaggeration is used, it is deliberately separated from the underlying astronomical position calculations.
@@ -554,38 +839,82 @@ Where visual exaggeration is used, it is deliberately separated from the underly
 The application has been developed incrementally, with major stages including:
 
 1. Major asteroid support
+
 2. Moon ephemerides and reference planes
+
 3. Absolute planetary rotation
+
 4. Long-range planetary orbital modelling
+
 5. Pluto and Charon
+
 6. Kuiper Belt
+
 7. Comets
+
 8. Star field and Milky Way
+
 9. Day, night and seasons
+
 10. Eclipse modelling
+
 11. Van Allen radiation belts
+
 12. Display controls
+
 13. Scale and display modes
 
-All thirteen planned development stages are now complete.
+The original thirteen development stages are complete. Subsequent completed work includes:
+
+14. Realistic Spacing display mode
+15. True Body + AU display mode
+16. UIScene lifecycle migration
+17. Near-Earth Asteroid subsystem with Apophis, 1999 AN10 and 2001 WN5
+18. JPL Horizons ephemerides and scientific close-approach validation
+19. Generic heliocentric and Earth-relative NEA trajectories
+20. Compact-mode NEA coordinate mapping
+21. Complete ±36-hour Earth-relative flyby trajectories with 865 five-minute samples
+22. NEA display control
+23. Persistent main-screen current display-mode indicator
+
+The dedicated NEA encounter selector remains the next planned feature.
 
 ---
 
 # Future Development
 
-Possible future areas include:
+The next planned work is:
+
+- Restore NOW to its normal current-date function and remove the temporary DEBUG Apophis jump
+- Add a dedicated NEA encounter selector
+- Add a generic flyby jump for selecting an asteroid encounter
+
+These items are not yet completed.
+
+Further possible future areas include:
 
 - Additional moons
+
 - More dwarf planets and trans-Neptunian objects
+
 - Additional comets and asteroids
+
 - Improved high-precision planetary ephemerides
+
 - More detailed eclipse prediction information
+
 - Planet information panels
+
 - Interactive object selection
+
 - Distance and scale measurements
+
 - Educational overlays
+
 - AR object tracking and guided tours
+
 - Search and navigation between Solar System objects
+
 - Additional deep-sky content
 
 ---
@@ -594,4 +923,5 @@ Possible future areas include:
 
 This project is intended as both an AR visualisation and an educational astronomy application.
 
-It demonstrates the Solar System as a dynamic system rather than a static model, allowing users to explore how planetary positions, rotations, moons, seasons, eclipses and other astronomical phenomena change over time.
+It demonstrates the Solar System as a dynamic system rather than a static model, allowing users to explore how planetary positions, rotations, moons, asteroid flybys, seasons, eclipses and other astronomical phenomena change over time.
+

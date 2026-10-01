@@ -641,6 +641,42 @@ private func downloadWN5Ephemerides() {
             centerImageView.widthAnchor.constraint(equalToConstant: ScreenSize.width * 0.05),
             centerImageView.heightAnchor.constraint(equalToConstant: ScreenSize.width * 0.05)
         ])
+
+        view.addSubview(displayModeLabel)
+
+        displayModeLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            displayModeLabel.topAnchor.constraint(equalTo: simulationDateLabel.bottomAnchor, constant: 5),
+            displayModeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            displayModeLabel.widthAnchor.constraint(equalToConstant: 180),
+            displayModeLabel.heightAnchor.constraint(equalToConstant: 26)
+        ])
+
+    }
+
+    private func updateDisplayModeLabel() {
+
+        switch selectedDisplayMode {
+
+        case .compact:
+            displayModeLabel.text = "Compact"
+
+        case .relativeSizes:
+            displayModeLabel.text = "True Body Scale"
+
+        case .astronomicalDistances:
+            displayModeLabel.text = "AU Orbit Spacing"
+
+        case .realisticSpacing:
+            displayModeLabel.text = "Realistic Spacing"
+
+        case .trueBodiesAstronomicalDistances:
+            displayModeLabel.text = "True Body + AU"
+
+        case .earthMoon:
+            displayModeLabel.text = "Earth–Moon Scale"
+        }
     }
 
     // ============================================================
@@ -792,8 +828,9 @@ private func downloadWN5Ephemerides() {
             )
         }
 
-        selectedDisplayMode =
-        displaySettingsView.currentDisplayMode()
+        selectedDisplayMode = displaySettingsView.currentDisplayMode()
+        updateDisplayModeLabel()
+        
     }
 
     // ============================================================
@@ -975,9 +1012,9 @@ private func downloadWN5Ephemerides() {
             return
         }
 
-        selectedDisplayMode =
-        mode
+        selectedDisplayMode = mode
 
+        updateDisplayModeLabel()
         rebuildSolarSystemForDisplayMode()
     }
 
@@ -1116,6 +1153,22 @@ private func downloadWN5Ephemerides() {
             from: simulationClock.currentDate
         )
     }
+
+    private let displayModeLabel: UILabel = {
+
+        let label = UILabel()
+
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        label.textAlignment = .center
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.70)
+        label.layer.cornerRadius = 6
+        label.layer.masksToBounds = true
+        label.layer.zPosition = 20
+        label.text = "Compact"
+
+        return label
+    }()
 
     // ============================================================
     // MARK: - TIME CONTROL ACTIONS
