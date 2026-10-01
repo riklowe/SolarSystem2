@@ -20,8 +20,8 @@ enum HorizonsEphemerisDownloader {
         downloadVectors(
             command: "99942;",
             designation: "99942 Apophis",
-            startTime: "2029-04-12 00:00",
-            stopTime: "2029-04-15 00:00",
+            startTime: "2029-04-12 09:00",
+            stopTime: "2029-04-15 10:00",
             stepSize: "1 h",
             completion: completion
         )
@@ -50,8 +50,8 @@ enum HorizonsEphemerisDownloader {
         downloadVectors(
             command: "399",
             designation: "Earth",
-            startTime: "2029-04-12 00:00",
-            stopTime: "2029-04-15 00:00",
+            startTime: "2029-04-12 09:00",
+            stopTime: "2029-04-15 10:00",
             stepSize: "1 h",
             completion: completion
         )
@@ -66,7 +66,7 @@ enum HorizonsEphemerisDownloader {
             command: "137108;",
             designation: "137108 1999 AN10",
             startTime: "2027-08-05 19:00",
-            stopTime: "2027-08-08 19:00",
+            stopTime: "2027-08-08 20:00",
             stepSize: "1 h",
             completion: completion
         )
@@ -96,7 +96,7 @@ enum HorizonsEphemerisDownloader {
             command: "399",
             designation: "Earth",
             startTime: "2027-08-05 19:00",
-            stopTime: "2027-08-08 19:00",
+            stopTime: "2027-08-08 20:00",
             stepSize: "1 h",
             completion: completion
         )

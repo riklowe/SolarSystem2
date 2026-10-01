@@ -19,6 +19,12 @@ AR SOLAR SYSTEM — DEVELOPMENT HISTORY
 
 Version 1.0 — Eclipses, Van Allen Belts and Display Modes
 ------------------------------------------------------------------------
+
+• Generalised Compact-mode Near-Earth Asteroid positioning using a shared radial mapping based on the existing planetary Compact display scale while preserving heliocentric direction.
+• Validated Compact-mode encounter positioning for Apophis, 1999 AN10 and 2001 WN5.
+• Corrected the JPL Horizons encounter-resource coverage for Apophis and 1999 AN10 to provide the complete ±36-hour Earth-relative flyby window.
+• Validated complete Earth-relative flyby trajectories for Apophis, 1999 AN10 and 2001 WN5, each using 865 five-minute trajectory samples.
+
 • Added (153814) 2001 WN5 as the third fully modelled Near-Earth Asteroid.
 • Added JPL Horizons encounter, Earth and long-term ephemeris datasets for the June 2028 2001 WN5 close approach.
 • Validated the 26 June 2028 2001 WN5 close approach at approximately 248,711 km from Earth's centre, within approximately 0.8 km of the 248,712 km reference distance.

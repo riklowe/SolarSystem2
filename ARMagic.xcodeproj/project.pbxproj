@@ -50,18 +50,18 @@
 		FDC9752A306D20DB007937E6 /* NearEarthAsteroidData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC97529306D20DB007937E6 /* NearEarthAsteroidData.swift */; };
 		FDC9752C306D2179007937E6 /* NearEarthAsteroidAstronomy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9752B306D2179007937E6 /* NearEarthAsteroidAstronomy.swift */; };
 		FDC9752E306D21F6007937E6 /* HorizonsEphemerisDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9752D306D21F6007937E6 /* HorizonsEphemerisDownloader.swift */; };
-		FDC97532306D298C007937E6 /* apophis.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97531306D298C007937E6 /* apophis.json */; };
-		FDC97534306D2CDA007937E6 /* earth-2029-encounter.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97533306D2CDA007937E6 /* earth-2029-encounter.json */; };
 		FDC97536306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC97535306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift */; };
 		FDC97538306DC07C007937E6 /* apophis_longterm.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97537306DC07C007937E6 /* apophis_longterm.json */; };
 		FDC9753B306E7597007937E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9753A306E7597007937E6 /* SceneDelegate.swift */; };
 		FDC9753F306E8E35007937E6 /* an10_longterm.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC9753D306E8E35007937E6 /* an10_longterm.json */; };
-		FDC97540306E8E35007937E6 /* an10.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC9753C306E8E35007937E6 /* an10.json */; };
-		FDC97541306E8E35007937E6 /* earth-2027-an10-encounter.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC9753E306E8E35007937E6 /* earth-2027-an10-encounter.json */; };
 		FDC97543306E9742007937E6 /* SolarSystemDisplayCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC97542306E9742007937E6 /* SolarSystemDisplayCoordinates.swift */; };
 		FDC97549306EA567007937E6 /* wn5_longterm.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97546306EA567007937E6 /* wn5_longterm.json */; };
 		FDC97553306EAF72007937E6 /* wn5.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97552306EAF72007937E6 /* wn5.json */; };
 		FDC97555306EB025007937E6 /* earth-2028-wn5-encounter.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97554306EB025007937E6 /* earth-2028-wn5-encounter.json */; };
+		FDCD4859306ECCD60041D86D /* earth-2029-encounter.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD4858306ECCD60041D86D /* earth-2029-encounter.json */; };
+		FDCD485A306ECCD60041D86D /* earth-2027-an10-encounter.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD4857306ECCD60041D86D /* earth-2027-an10-encounter.json */; };
+		FDCD485B306ECCD60041D86D /* an10.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD4855306ECCD60041D86D /* an10.json */; };
+		FDCD485C306ECCD60041D86D /* apophis.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD4856306ECCD60041D86D /* apophis.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,18 +111,18 @@
 		FDC97529306D20DB007937E6 /* NearEarthAsteroidData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEarthAsteroidData.swift; sourceTree = "<group>"; };
 		FDC9752B306D2179007937E6 /* NearEarthAsteroidAstronomy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEarthAsteroidAstronomy.swift; sourceTree = "<group>"; };
 		FDC9752D306D21F6007937E6 /* HorizonsEphemerisDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizonsEphemerisDownloader.swift; sourceTree = "<group>"; };
-		FDC97531306D298C007937E6 /* apophis.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = apophis.json; sourceTree = "<group>"; };
-		FDC97533306D2CDA007937E6 /* earth-2029-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2029-encounter.json"; sourceTree = "<group>"; };
 		FDC97535306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEarthAsteroidBuilder.swift; sourceTree = "<group>"; };
 		FDC97537306DC07C007937E6 /* apophis_longterm.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = apophis_longterm.json; sourceTree = "<group>"; };
 		FDC9753A306E7597007937E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FDC9753C306E8E35007937E6 /* an10.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = an10.json; sourceTree = "<group>"; };
 		FDC9753D306E8E35007937E6 /* an10_longterm.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = an10_longterm.json; sourceTree = "<group>"; };
-		FDC9753E306E8E35007937E6 /* earth-2027-an10-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2027-an10-encounter.json"; sourceTree = "<group>"; };
 		FDC97542306E9742007937E6 /* SolarSystemDisplayCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSystemDisplayCoordinates.swift; sourceTree = "<group>"; };
 		FDC97546306EA567007937E6 /* wn5_longterm.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = wn5_longterm.json; sourceTree = "<group>"; };
 		FDC97552306EAF72007937E6 /* wn5.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = wn5.json; sourceTree = "<group>"; };
 		FDC97554306EB025007937E6 /* earth-2028-wn5-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2028-wn5-encounter.json"; sourceTree = "<group>"; };
+		FDCD4855306ECCD60041D86D /* an10.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = an10.json; sourceTree = "<group>"; };
+		FDCD4856306ECCD60041D86D /* apophis.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = apophis.json; sourceTree = "<group>"; };
+		FDCD4857306ECCD60041D86D /* earth-2027-an10-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2027-an10-encounter.json"; sourceTree = "<group>"; };
+		FDCD4858306ECCD60041D86D /* earth-2029-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2029-encounter.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,15 +295,15 @@
 		FDC97530306D295F007937E6 /* NEAEphemerides */ = {
 			isa = PBXGroup;
 			children = (
+				FDCD4855306ECCD60041D86D /* an10.json */,
+				FDCD4856306ECCD60041D86D /* apophis.json */,
+				FDCD4857306ECCD60041D86D /* earth-2027-an10-encounter.json */,
+				FDCD4858306ECCD60041D86D /* earth-2029-encounter.json */,
 				FDC97552306EAF72007937E6 /* wn5.json */,
 				FDC97546306EA567007937E6 /* wn5_longterm.json */,
 				FDC97554306EB025007937E6 /* earth-2028-wn5-encounter.json */,
-				FDC9753C306E8E35007937E6 /* an10.json */,
 				FDC9753D306E8E35007937E6 /* an10_longterm.json */,
-				FDC9753E306E8E35007937E6 /* earth-2027-an10-encounter.json */,
 				FDC97537306DC07C007937E6 /* apophis_longterm.json */,
-				FDC97533306D2CDA007937E6 /* earth-2029-encounter.json */,
-				FDC97531306D298C007937E6 /* apophis.json */,
 			);
 			path = NEAEphemerides;
 			sourceTree = "<group>";
@@ -381,13 +381,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FDC97532306D298C007937E6 /* apophis.json in Resources */,
+				FDCD4859306ECCD60041D86D /* earth-2029-encounter.json in Resources */,
+				FDCD485A306ECCD60041D86D /* earth-2027-an10-encounter.json in Resources */,
+				FDCD485B306ECCD60041D86D /* an10.json in Resources */,
+				FDCD485C306ECCD60041D86D /* apophis.json in Resources */,
 				FDC97553306EAF72007937E6 /* wn5.json in Resources */,
-				FDC97534306D2CDA007937E6 /* earth-2029-encounter.json in Resources */,
 				FDC9753F306E8E35007937E6 /* an10_longterm.json in Resources */,
 				FDC97549306EA567007937E6 /* wn5_longterm.json in Resources */,
-				FDC97540306E8E35007937E6 /* an10.json in Resources */,
-				FDC97541306E8E35007937E6 /* earth-2027-an10-encounter.json in Resources */,
 				C97DE8CF2004B1E1002F0E38 /* LaunchScreen.storyboard in Resources */,
 				C97DE8CC2004B1E1002F0E38 /* Assets.xcassets in Resources */,
 				FDC97555306EB025007937E6 /* earth-2028-wn5-encounter.json in Resources */,

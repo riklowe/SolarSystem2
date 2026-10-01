@@ -221,6 +221,10 @@ class GameViewController: UIViewController {
 //downloadWN5Ephemerides()
 //#endif
 
+//#if DEBUG
+//downloadCorrectedEncounterEphemerides()
+//#endif
+
         setupTimeControls()
         setupDisplaySettings()
 
@@ -379,6 +383,113 @@ class GameViewController: UIViewController {
 //    }
 //#endif
 
+#if DEBUG
+private func downloadCorrectedEncounterEphemerides() {
+
+    print("")
+    print("================ CORRECTED ENCOUNTER DOWNLOADS ================")
+    print("Starting sequential Horizons downloads...")
+    print("")
+
+    HorizonsEphemerisDownloader.downloadApophisEncounter { result in
+        switch result {
+        case .success(let ephemeris):
+            do {
+                let url = try HorizonsEphemerisDownloader.writeJSON(ephemeris)
+                print("CORRECTED APOPHIS")
+                print("Points: \(ephemeris.points.count)")
+                print("Saved: \(url.path)")
+            } catch {
+                print("Apophis write failed: \(error)")
+                return
+            }
+
+        case .failure(let error):
+            print("Apophis download failed: \(error)")
+            return
+        }
+
+        print("")
+        print("Waiting 3 seconds before Earth request...")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+
+            HorizonsEphemerisDownloader.downloadEarthEncounter { result in
+                switch result {
+                case .success(let ephemeris):
+                    do {
+                        let url = try HorizonsEphemerisDownloader.writeEarthJSON(ephemeris)
+                        print("CORRECTED APOPHIS EARTH")
+                        print("Points: \(ephemeris.points.count)")
+                        print("Saved: \(url.path)")
+                    } catch {
+                        print("Apophis Earth write failed: \(error)")
+                        return
+                    }
+
+                case .failure(let error):
+                    print("Apophis Earth download failed: \(error)")
+                    return
+                }
+
+                print("")
+                print("Waiting 3 seconds before AN10 request...")
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+
+                    HorizonsEphemerisDownloader.downloadAN10Encounter { result in
+                        switch result {
+                        case .success(let ephemeris):
+                            do {
+                                let url = try HorizonsEphemerisDownloader.writeAN10JSON(ephemeris)
+                                print("CORRECTED AN10")
+                                print("Points: \(ephemeris.points.count)")
+                                print("Saved: \(url.path)")
+                            } catch {
+                                print("AN10 write failed: \(error)")
+                                return
+                            }
+
+                        case .failure(let error):
+                            print("AN10 download failed: \(error)")
+                            return
+                        }
+
+                        print("")
+                        print("Waiting 3 seconds before AN10 Earth request...")
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+
+                            HorizonsEphemerisDownloader.downloadEarthAN10Encounter { result in
+                                switch result {
+                                case .success(let ephemeris):
+                                    do {
+                                        let url = try HorizonsEphemerisDownloader.writeEarthAN10JSON(ephemeris)
+                                        print("CORRECTED AN10 EARTH")
+                                        print("Points: \(ephemeris.points.count)")
+                                        print("Saved: \(url.path)")
+                                    } catch {
+                                        print("AN10 Earth write failed: \(error)")
+                                        return
+                                    }
+
+                                case .failure(let error):
+                                    print("AN10 Earth download failed: \(error)")
+                                    return
+                                }
+
+                                print("")
+                                print("================ DOWNLOADS COMPLETE ===========================")
+                                print("")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+#endif
 #if DEBUG
 private func downloadWN5Ephemerides() {
 
