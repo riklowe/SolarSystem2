@@ -7,6 +7,7 @@
 //
 //  Based On - ARMagic by Alex Nagy on 09/01/2018.
 //
+
 import UIKit
 // ============================================================
 // MARK: - DISPLAY TOGGLE BUTTON

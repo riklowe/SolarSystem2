@@ -139,10 +139,7 @@
 		C97DE8C32004B1E1002F0E38 /* ARMagic */ = {
 			isa = PBXGroup;
 			children = (
-				FD7ECAC83062A6EE00D0AAFA /* version.swift */,
-				FD427BF93063AB1400C2F1E2 /* DisplaySettingsView.swift */,
-				C97DE8D62004B326002F0E38 /* GameViewController.swift */,
-				FD7ECAB2305FDFBB00D0AAFA /* SimulationClock.swift */,
+				FDC97539306E6991007937E6 /* General */,
 				FD7ECAC73061959100D0AAFA /* Assets */,
 				FD427BF530639F0100C2F1E2 /* Comets  */,
 				FD7ECAC4306184D200D0AAFA /* Utils */,
@@ -151,8 +148,6 @@
 				FD7ECAC230617DB000D0AAFA /* Astroids */,
 				FD7ECAC530618C1A00D0AAFA /* Planet */,
 				FD7ECAC63061950400D0AAFA /* Solar System */,
-				C97DE8CD2004B1E1002F0E38 /* LaunchScreen.storyboard */,
-				C97DE8D02004B1E1002F0E38 /* Info.plist */,
 			);
 			path = ARMagic;
 			sourceTree = "<group>";
@@ -286,6 +281,19 @@
 				FDC97531306D298C007937E6 /* apophis.json */,
 			);
 			path = NEAEphemerides;
+			sourceTree = "<group>";
+		};
+		FDC97539306E6991007937E6 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				FD7ECAC83062A6EE00D0AAFA /* version.swift */,
+				C97DE8D62004B326002F0E38 /* GameViewController.swift */,
+				FD427BF93063AB1400C2F1E2 /* DisplaySettingsView.swift */,
+				FD7ECAB2305FDFBB00D0AAFA /* SimulationClock.swift */,
+				C97DE8CD2004B1E1002F0E38 /* LaunchScreen.storyboard */,
+				C97DE8D02004B1E1002F0E38 /* Info.plist */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

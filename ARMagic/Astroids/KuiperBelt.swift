@@ -2,14 +2,10 @@
 //  KuiperBelt.swift
 //  ARMagic
 //
-//  Created by Richard Lowe on 22/09/2026.
-//  Copyright © 2026 Alex Nagy. All rights reserved.
+//  Created by Richard Lowe
+//  Copyright © 2026. All rights reserved
 //
-
-//
-//  KuiperBelt.swift
-//  SolarSystem2
-//
+//  Based On - ARMagic by Alex Nagy on 09/01/2018.
 
 import Foundation
 import SceneKit

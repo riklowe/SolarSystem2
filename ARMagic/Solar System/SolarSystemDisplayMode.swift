@@ -2,8 +2,10 @@
 //  SolarSystemDisplayMode.swift
 //  ARMagic
 //
-//  Stage 13 — Scale / Display Modes
+//  Created by Richard Lowe
+//  Copyright © 2026. All rights reserved
 //
+//  Based On - ARMagic by Alex Nagy on 09/01/2018.
 
 import Foundation
 import CoreGraphics
