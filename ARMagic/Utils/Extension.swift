@@ -2,7 +2,6 @@
 //  Extension.swift
 //  ARMagic
 //
-//
 //  Created by Richard Lowe
 //  Copyright © 2026. All rights reserved
 //

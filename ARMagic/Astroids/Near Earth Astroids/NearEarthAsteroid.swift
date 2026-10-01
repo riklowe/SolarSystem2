@@ -6,6 +6,7 @@
 //  Copyright © 2026. All rights reserved
 //
 //  Based On - ARMagic by Alex Nagy on 09/01/2018.
+//
 
 import Foundation
 
@@ -25,4 +26,6 @@ struct NearEarthAsteroid {
     let rotationPeriodHours: Double?
 
     let ephemerisResourceName: String
+    let longTermEphemerisResourceName: String?
+    let earthEphemerisResourceName: String?
 }

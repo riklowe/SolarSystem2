@@ -178,14 +178,11 @@ enum NearEarthAsteroidAstronomy {
 
     static func longTermEphemeris(for asteroid: NearEarthAsteroid) -> NearEarthEphemeris? {
 
-        switch asteroid.designation {
-
-        case "99942 Apophis":
-            return loadEphemeris(resourceName: "apophis_longterm")
-
-        default:
+        guard let resourceName = asteroid.longTermEphemerisResourceName else {
             return nil
         }
+
+        return loadEphemeris(resourceName: resourceName)
     }
 
     static func longTermPositionAU(for asteroid: NearEarthAsteroid, date: Date) -> SIMD3<Double>? {
@@ -197,9 +194,13 @@ enum NearEarthAsteroidAstronomy {
     // MARK: - EARTH POSITION
     // ============================================================
 
-    static func earthHeliocentricPositionAU(date: Date) -> SIMD3<Double>? {
+    static func earthHeliocentricPositionAU(for asteroid: NearEarthAsteroid, date: Date) -> SIMD3<Double>? {
 
-        guard let ephemeris = loadEphemeris(resourceName: "earth-2029-encounter") else {
+        guard let resourceName = asteroid.earthEphemerisResourceName else {
+            return nil
+        }
+
+        guard let ephemeris = loadEphemeris(resourceName: resourceName) else {
             return nil
         }
 
@@ -297,8 +298,8 @@ static func debugApophisLongTermOrbitChange() {
             let date = startDate.addingTimeInterval(elapsed)
 
             if let apophisPosition = heliocentricPositionAU(for: asteroid, date: date),
-               let earthPosition = earthHeliocentricPositionAU(date: date) {
-
+               let earthPosition = earthHeliocentricPositionAU(for: asteroid, date: date) {
+                
                 let geocentricVectorAU = apophisPosition - earthPosition
                 let distanceAU = simd_length(geocentricVectorAU)
                 let distanceKM = distanceAU * 149_597_870.7

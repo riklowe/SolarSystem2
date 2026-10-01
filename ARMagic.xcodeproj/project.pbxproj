@@ -54,6 +54,7 @@
 		FDC97534306D2CDA007937E6 /* earth-2029-encounter.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97533306D2CDA007937E6 /* earth-2029-encounter.json */; };
 		FDC97536306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC97535306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift */; };
 		FDC97538306DC07C007937E6 /* apophis_longterm.json in Resources */ = {isa = PBXBuildFile; fileRef = FDC97537306DC07C007937E6 /* apophis_longterm.json */; };
+		FDC9753B306E7597007937E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9753A306E7597007937E6 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +108,7 @@
 		FDC97533306D2CDA007937E6 /* earth-2029-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2029-encounter.json"; sourceTree = "<group>"; };
 		FDC97535306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEarthAsteroidBuilder.swift; sourceTree = "<group>"; };
 		FDC97537306DC07C007937E6 /* apophis_longterm.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = apophis_longterm.json; sourceTree = "<group>"; };
+		FDC9753A306E7597007937E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				FD7ECAC230617DB000D0AAFA /* Astroids */,
 				FD7ECAC530618C1A00D0AAFA /* Planet */,
 				FD7ECAC63061950400D0AAFA /* Solar System */,
+				C97DE8D02004B1E1002F0E38 /* Info.plist */,
 			);
 			path = ARMagic;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 		FD7ECAC4306184D200D0AAFA /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				FDC9753A306E7597007937E6 /* SceneDelegate.swift */,
 				C9BEE9D92005F13C00E9F49A /* Extension.swift */,
 				C97DE8C42004B1E1002F0E38 /* AppDelegate.swift */,
 			);
@@ -231,11 +235,11 @@
 		FD7ECAC63061950400D0AAFA /* Solar System */ = {
 			isa = PBXGroup;
 			children = (
+				FD7ECAB4305FDFCA00D0AAFA /* SolarSystemBuilder.swift */,
 				FD427C0D3064402900C2F1E2 /* SolarSystemDisplayMode.swift */,
 				FD7ECAB0305FDFAA00D0AAFA /* SceneFactory.swift */,
 				FD7ECAAC305FDF8900D0AAFA /* SolarSystemData.swift */,
 				FD7ECAA4305FDF3400D0AAFA /* OrbitalElements.swift */,
-				FD7ECAB4305FDFCA00D0AAFA /* SolarSystemBuilder.swift */,
 				FD7ECAA6305FDF5500D0AAFA /* Astronomy.swift */,
 				FD427BFC3063B7EF00C2F1E2 /* StarfieldBuilder.swift */,
 				FD427BFE3063BC0000C2F1E2 /* ZodiacConstellations.swift */,
@@ -291,7 +295,6 @@
 				FD427BF93063AB1400C2F1E2 /* DisplaySettingsView.swift */,
 				FD7ECAB2305FDFBB00D0AAFA /* SimulationClock.swift */,
 				C97DE8CD2004B1E1002F0E38 /* LaunchScreen.storyboard */,
-				C97DE8D02004B1E1002F0E38 /* Info.plist */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				FD7ECAB1305FDFAA00D0AAFA /* SceneFactory.swift in Sources */,
 				FDC9752C306D2179007937E6 /* NearEarthAsteroidAstronomy.swift in Sources */,
 				FDC97536306D2FB9007937E6 /* NearEarthAsteroidBuilder.swift in Sources */,
+				FDC9753B306E7597007937E6 /* SceneDelegate.swift in Sources */,
 				FD427C033063C0AC00C2F1E2 /* EarthSeason.swift in Sources */,
 				FD7ECAA7305FDF5500D0AAFA /* Astronomy.swift in Sources */,
 				FD427BFF3063BC0000C2F1E2 /* ZodiacConstellations.swift in Sources */,

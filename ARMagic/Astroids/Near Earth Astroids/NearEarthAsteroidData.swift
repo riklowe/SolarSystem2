@@ -6,6 +6,7 @@
 //  Copyright © 2026. All rights reserved
 //
 //  Based On - ARMagic by Alex Nagy on 09/01/2018.
+//
 
 import Foundation
 
@@ -20,7 +21,9 @@ enum NearEarthAsteroidData {
         encounterDate: makeUTCDate(year: 2029, month: 4, day: 13, hour: 21, minute: 46),
         encounterDistanceKM: 38_012.0,
         rotationPeriodHours: nil,
-        ephemerisResourceName: "apophis"
+        ephemerisResourceName: "apophis",
+        longTermEphemerisResourceName: "apophis_longterm",
+        earthEphemerisResourceName: "earth-2029-encounter"
     )
 
     static let all: [NearEarthAsteroid] = [

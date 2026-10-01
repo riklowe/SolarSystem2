@@ -258,7 +258,7 @@ final class NearEarthAsteroidBuilder {
         while sampleDate <= endDate {
 
             if let asteroidPositionAU = NearEarthAsteroidAstronomy.heliocentricPositionAU(for: asteroid, date: sampleDate),
-               let earthPositionAU = NearEarthAsteroidAstronomy.earthHeliocentricPositionAU(date: sampleDate) {
+               let earthPositionAU = NearEarthAsteroidAstronomy.earthHeliocentricPositionAU(for: asteroid, date: sampleDate) {
 
                 let geocentricPositionAU = asteroidPositionAU - earthPositionAU
                 vertices.append(earthMoonScenePosition(from: geocentricPositionAU))
@@ -461,10 +461,10 @@ final class NearEarthAsteroidBuilder {
         }
 
         if displayMode == .earthMoon {
-            guard let earthPositionAU = NearEarthAsteroidAstronomy.earthHeliocentricPositionAU(date: date) else {
+            guard let earthPositionAU = NearEarthAsteroidAstronomy.earthHeliocentricPositionAU(for: asteroid, date: date) else {
                 return
             }
-
+            
             let geocentricPositionAU = heliocentricPositionAU - earthPositionAU
             rootNode.position = earthMoonScenePosition(from: geocentricPositionAU)
         } else {

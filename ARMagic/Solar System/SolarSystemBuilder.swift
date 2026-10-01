@@ -1168,64 +1168,37 @@ print("")
     // MARK: - PLANET GEOMETRY
     // ============================================================
 
-    private func createPlanetSphere(
-        for planet: Planet,
-        radius: CGFloat
-    ) -> SCNNode {
+    private func createPlanetSphere(for planet: Planet, radius: CGFloat) -> SCNNode {
         printLog("---------- \((moduleName.last)?.components(separatedBy: ".").first ?? "") / \(#function) ----------")
 
-        let sphere = SCNSphere(
-            radius: radius
-        )
-
+        let sphere = SCNSphere(radius: radius)
         sphere.segmentCount = 96
 
         let material = SCNMaterial()
 
-        if let image = UIImage(
-            named: planet.image
-        ) {
-            material.diffuse.contents =
-                image
+        if let image = UIImage(named: planet.image) {
+            material.diffuse.contents = image
         } else {
-            material.diffuse.contents =
-                UIColor.systemPink
+            material.diffuse.contents = UIColor.systemPink
         }
 
         if planet.name.lowercased() == "sun" {
-
-            material.lightingModel =
-                .constant
-
-            material.emission.contents =
-                material.diffuse.contents
-
+            material.lightingModel = .constant
+            material.emission.contents = material.diffuse.contents
         } else {
-
-            material.lightingModel =
-                .lambert
-
-            material.ambient.contents =
-                UIColor.black
-
-            material.emission.contents =
-                UIColor.black
+            material.lightingModel = .lambert
+            material.ambient.contents = UIColor.black
+            material.emission.contents = UIColor.black
         }
 
-        sphere.materials = [
-            material
-        ]
+        sphere.materials = [material]
 
-        let node = SCNNode(
-            geometry: sphere
-        )
-
-        node.castsShadow =
-            planet.name.lowercased() != "sun"
+        let node = SCNNode(geometry: sphere)
+        node.castsShadow = planet.name.lowercased() != "sun"
 
         return node
     }
-
+    
     // ============================================================
     // MARK: - EARTH GREENWICH TEST MARKER
     // ============================================================
