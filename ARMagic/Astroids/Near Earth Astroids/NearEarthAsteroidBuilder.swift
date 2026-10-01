@@ -245,11 +245,9 @@ final class NearEarthAsteroidBuilder {
 
     private func buildEarthRelativeTrajectory() {
 
-        guard let startDate = makeUTCDate(year: 2029, month: 4, day: 12, hour: 0, minute: 0),
-              let endDate = makeUTCDate(year: 2029, month: 4, day: 15, hour: 0, minute: 0) else {
-            return
-        }
-
+        let halfWindow: TimeInterval = 36.0 * 60.0 * 60.0
+        let startDate = asteroid.encounterDate.addingTimeInterval(-halfWindow)
+        let endDate = asteroid.encounterDate.addingTimeInterval(halfWindow)
         let sampleInterval: TimeInterval = 5.0 * 60.0
 
         var vertices: [SCNVector3] = []
@@ -272,6 +270,24 @@ final class NearEarthAsteroidBuilder {
             colour: UIColor.systemCyan,
             description: "Earth-relative flyby"
         )
+
+    #if DEBUG
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "dd MMM yyyy HH:mm:ss 'UTC'"
+
+        print("")
+        print("================ NEA EARTH-RELATIVE TRAJECTORY =========")
+        print("Object: \(asteroid.name)")
+        print("Encounter: \(formatter.string(from: asteroid.encounterDate))")
+        print("Start: \(formatter.string(from: startDate))")
+        print("End: \(formatter.string(from: endDate))")
+        print("Sample interval: \(Int(sampleInterval / 60.0)) minutes")
+        print("Vertices: \(vertices.count)")
+        print("========================================================")
+        print("")
+    #endif
     }
 
     private func buildHeliocentricTrajectory() {
@@ -479,13 +495,33 @@ final class NearEarthAsteroidBuilder {
     // ============================================================
 
     private func heliocentricScenePosition(from positionAU: SIMD3<Double>) -> SCNVector3 {
-        let scale = astronomicalUnitsToSceneUnits
 
-        return SCNVector3(
-            Float(positionAU.x * scale),
-            Float(positionAU.z * scale),
-            Float(positionAU.y * scale)
-        )
+        switch displayMode {
+
+        case .compact, .relativeSizes:
+            return SolarSystemDisplayCoordinates.compactPosition(from: positionAU)
+
+        case .astronomicalDistances, .trueBodiesAstronomicalDistances:
+            let scale = astronomicalUnitsToSceneUnits
+
+            return SCNVector3(
+                Float(positionAU.x * scale),
+                Float(positionAU.z * scale),
+                Float(-positionAU.y * scale)
+            )
+
+        case .realisticSpacing:
+            let scale = astronomicalUnitsToSceneUnits
+
+            return SCNVector3(
+                Float(positionAU.x * scale),
+                Float(positionAU.z * scale),
+                Float(-positionAU.y * scale)
+            )
+
+        case .earthMoon:
+            return SCNVector3Zero
+        }
     }
 
     private func earthMoonScenePosition(from positionAU: SIMD3<Double>) -> SCNVector3 {

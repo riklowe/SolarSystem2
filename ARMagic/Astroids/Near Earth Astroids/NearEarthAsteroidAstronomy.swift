@@ -259,32 +259,14 @@ static func debugApophisLongTermOrbitChange() {
 #endif
     
     // ============================================================
-    // MARK: - APOPHIS 2029 VALIDATION
+    // MARK: - NEA ENCOUNTER VALIDATION
     // ============================================================
 
-    static func debugApophis2029Encounter() {
+    static func debugEncounter(for asteroid: NearEarthAsteroid, searchWindowHours: Double = 4.0) {
 
-        let asteroid = NearEarthAsteroidData.apophis
-
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-
-        var components = DateComponents()
-        components.calendar = calendar
-        components.timeZone = TimeZone(secondsFromGMT: 0)
-        components.year = 2029
-        components.month = 4
-        components.day = 13
-        components.hour = 20
-        components.minute = 0
-        components.second = 0
-
-        guard let startDate = components.date else {
-            print("Unable to create Apophis encounter start date")
-            return
-        }
-
-        let searchDuration: TimeInterval = 4.0 * 60.0 * 60.0
+        let halfWindowSeconds = searchWindowHours * 60.0 * 60.0 / 2.0
+        let startDate = asteroid.encounterDate.addingTimeInterval(-halfWindowSeconds)
+        let searchDuration = searchWindowHours * 60.0 * 60.0
         let searchStep: TimeInterval = 1.0
 
         var bestDate: Date?
@@ -297,10 +279,10 @@ static func debugApophisLongTermOrbitChange() {
 
             let date = startDate.addingTimeInterval(elapsed)
 
-            if let apophisPosition = heliocentricPositionAU(for: asteroid, date: date),
+            if let asteroidPosition = heliocentricPositionAU(for: asteroid, date: date),
                let earthPosition = earthHeliocentricPositionAU(for: asteroid, date: date) {
-                
-                let geocentricVectorAU = apophisPosition - earthPosition
+
+                let geocentricVectorAU = asteroidPosition - earthPosition
                 let distanceAU = simd_length(geocentricVectorAU)
                 let distanceKM = distanceAU * 149_597_870.7
 
@@ -315,12 +297,15 @@ static func debugApophisLongTermOrbitChange() {
         }
 
         guard let bestDate, let bestVectorAU else {
-            print("Unable to calculate Apophis 2029 closest approach")
+            print("Unable to calculate closest approach for \(asteroid.name)")
             return
         }
 
         let earthMeanRadiusKM = 6_371.0
         let altitudeKM = bestDistanceKM - earthMeanRadiusKM
+        let referenceDistanceKM = asteroid.encounterDistanceKM
+        let differenceKM = bestDistanceKM - referenceDistanceKM
+        let differencePercent = referenceDistanceKM > 0.0 ? differenceKM / referenceDistanceKM * 100.0 : 0.0
 
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_GB")
@@ -328,10 +313,15 @@ static func debugApophisLongTermOrbitChange() {
         formatter.dateFormat = "dd MMM yyyy HH:mm:ss 'UTC'"
 
         print("")
-        print("================ APOPHIS 2029 VALIDATION ================")
+        print("================ NEA ENCOUNTER VALIDATION ===============")
+        print("Object: \(asteroid.designation)")
+        print("Configured encounter: \(formatter.string(from: asteroid.encounterDate))")
         print("Closest calculated time: \(formatter.string(from: bestDate))")
         print(String(format: "Earth-centre distance: %.3f km", bestDistanceKM))
         print(String(format: "Approx surface altitude: %.3f km", altitudeKM))
+        print(String(format: "Reference distance: %.3f km", referenceDistanceKM))
+        print(String(format: "Difference: %+.3f km", differenceKM))
+        print(String(format: "Difference: %+.6f %%", differencePercent))
         print("")
         print("Geocentric vector:")
         print(String(format: "X: %.12f AU", bestVectorAU.x))
@@ -339,6 +329,10 @@ static func debugApophisLongTermOrbitChange() {
         print(String(format: "Z: %.12f AU", bestVectorAU.z))
         print("==========================================================")
         print("")
+    }
+
+    static func debugApophis2029Encounter() {
+        debugEncounter(for: NearEarthAsteroidData.apophis)
     }
     
     // ============================================================

@@ -216,6 +216,11 @@ class GameViewController: UIViewController {
 
         setupViews()
         setupAR()
+
+//#if DEBUG
+//downloadWN5Ephemerides()
+//#endif
+
         setupTimeControls()
         setupDisplaySettings()
 
@@ -245,11 +250,21 @@ class GameViewController: UIViewController {
 
 #if DEBUG
         //downloadApophisEphemeris()
+        //downloadAN10Ephemerides()
         //downloadApophisLongTermEphemeris()
         testApophisEphemeris()
         //downloadEarthEncounterEphemeris()
+
         NearEarthAsteroidAstronomy.debugApophis2029Encounter()
+        NearEarthAsteroidAstronomy.debugEncounter(for: NearEarthAsteroidData.an10)
+        NearEarthAsteroidAstronomy.debugEncounter(for: NearEarthAsteroidData.wn5)
+
         NearEarthAsteroidAstronomy.debugApophisLongTermOrbitChange()
+
+        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.apophis)
+        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.an10)
+        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.wn5)
+
 #endif
 
     }
@@ -288,10 +303,10 @@ class GameViewController: UIViewController {
 
         solarSystemBuilder?.update(for: date)
 
-        #if DEBUG
+#if DEBUG
         solarSystemBuilder?.rebuildEarthMoonOrbit(for: date)
         solarSystemBuilder?.debugEarthMoonOrbitAlignment(for: date)
-        #endif
+#endif
 
         updateSimulationDateLabel()
 
@@ -305,38 +320,141 @@ class GameViewController: UIViewController {
     }
 #endif
 
+//#if DEBUG
+//    private func downloadWN5Ephemerides() {
+//
+//        print("")
+//        print("================ WN5 HORIZONS DOWNLOAD =================")
+//
+//        HorizonsEphemerisDownloader.downloadWN5Encounter { result in
+//            switch result {
+//            case .success(let ephemeris):
+//                do {
+//                    let url = try HorizonsEphemerisDownloader.writeWN5JSON(ephemeris)
+//                    print("WN5 encounter downloaded")
+//                    print("Points: \(ephemeris.points.count)")
+//                    print("File: \(url.path)")
+//                } catch {
+//                    print("WN5 encounter write failed: \(error)")
+//                }
+//
+//            case .failure(let error):
+//                print("WN5 encounter download failed: \(error)")
+//            }
+//        }
+//
+//        HorizonsEphemerisDownloader.downloadEarthWN5Encounter { result in
+//            switch result {
+//            case .success(let ephemeris):
+//                do {
+//                    let url = try HorizonsEphemerisDownloader.writeEarthWN5JSON(ephemeris)
+//                    print("WN5 Earth encounter downloaded")
+//                    print("Points: \(ephemeris.points.count)")
+//                    print("File: \(url.path)")
+//                } catch {
+//                    print("WN5 Earth encounter write failed: \(error)")
+//                }
+//
+//            case .failure(let error):
+//                print("WN5 Earth encounter download failed: \(error)")
+//            }
+//        }
+//
+//        HorizonsEphemerisDownloader.downloadWN5LongTerm { result in
+//            switch result {
+//            case .success(let ephemeris):
+//                do {
+//                    let url = try HorizonsEphemerisDownloader.writeWN5LongTermJSON(ephemeris)
+//                    print("WN5 long-term downloaded")
+//                    print("Points: \(ephemeris.points.count)")
+//                    print("File: \(url.path)")
+//                } catch {
+//                    print("WN5 long-term write failed: \(error)")
+//                }
+//
+//            case .failure(let error):
+//                print("WN5 long-term download failed: \(error)")
+//            }
+//        }
+//    }
+//#endif
+
 #if DEBUG
-private func downloadApophisLongTermEphemeris() {
+private func downloadWN5Ephemerides() {
 
-    HorizonsEphemerisDownloader.downloadApophisLongTerm { result in
+    print("")
+    print("================ WN5 HORIZONS DOWNLOAD =================")
+    print("")
 
+    HorizonsEphemerisDownloader.downloadWN5Encounter { result in
         switch result {
-
         case .success(let ephemeris):
-
             do {
-                let url = try HorizonsEphemerisDownloader.writeApophisLongTermJSON(ephemeris)
-
-                print("")
-                print("================ APOPHIS LONG-TERM EPHEMERIS =========")
+                let url = try HorizonsEphemerisDownloader.writeWN5JSON(ephemeris)
+                print("WN5 encounter downloaded")
                 print("Points: \(ephemeris.points.count)")
-                print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
-                print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
-                print("JSON: \(url.path)")
-                print("=======================================================")
-                print("")
-
+                print("File: \(url.path)")
             } catch {
-                print("Failed writing Apophis long-term ephemeris: \(error)")
+                print("WN5 encounter write failed: \(error)")
             }
 
         case .failure(let error):
-            print("Apophis long-term Horizons download failed: \(error)")
+            print("WN5 encounter download failed: \(error)")
+        }
+    }
+
+    HorizonsEphemerisDownloader.downloadEarthWN5Encounter { result in
+        switch result {
+        case .success(let ephemeris):
+            do {
+                let url = try HorizonsEphemerisDownloader.writeEarthWN5JSON(ephemeris)
+                print("WN5 Earth encounter downloaded")
+                print("Points: \(ephemeris.points.count)")
+                print("File: \(url.path)")
+            } catch {
+                print("WN5 Earth encounter write failed: \(error)")
+            }
+
+        case .failure(let error):
+            print("WN5 Earth encounter download failed: \(error)")
         }
     }
 }
 #endif
-    
+
+
+#if DEBUG
+    private func downloadApophisLongTermEphemeris() {
+
+        HorizonsEphemerisDownloader.downloadApophisLongTerm { result in
+
+            switch result {
+
+            case .success(let ephemeris):
+
+                do {
+                    let url = try HorizonsEphemerisDownloader.writeApophisLongTermJSON(ephemeris)
+
+                    print("")
+                    print("================ APOPHIS LONG-TERM EPHEMERIS =========")
+                    print("Points: \(ephemeris.points.count)")
+                    print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
+                    print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
+                    print("JSON: \(url.path)")
+                    print("=======================================================")
+                    print("")
+
+                } catch {
+                    print("Failed writing Apophis long-term ephemeris: \(error)")
+                }
+
+            case .failure(let error):
+                print("Apophis long-term Horizons download failed: \(error)")
+            }
+        }
+    }
+#endif
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -1178,37 +1296,102 @@ private func downloadApophisLongTermEphemeris() {
         }
     }
 
-#if DEBUG
-    private func downloadApophisEphemeris() {
-
-        HorizonsEphemerisDownloader.downloadApophisEncounter { result in
-
-            switch result {
-
-            case .success(let ephemeris):
-
-                do {
-                    let url = try HorizonsEphemerisDownloader.writeJSON(ephemeris)
-
-                    print("")
-                    print("================ APOPHIS EPHEMERIS =================")
-                    print("Points: \(ephemeris.points.count)")
-                    print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
-                    print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
-                    print("JSON: \(url.path)")
-                    print("=====================================================")
-                    print("")
-
-                } catch {
-                    print("Failed writing Apophis ephemeris: \(error)")
-                }
-
-            case .failure(let error):
-                print("Apophis Horizons download failed: \(error)")
-            }
-        }
-    }
-#endif
+    //#if DEBUG
+    //private func downloadAN10Ephemerides() {
+    //
+    //    print("")
+    //    print("================ AN10 DOWNLOAD START ==================")
+    //    print("")
+    //
+    //    HorizonsEphemerisDownloader.downloadAN10Encounter { encounterResult in
+    //
+    //        switch encounterResult {
+    //
+    //        case .success(let encounterEphemeris):
+    //
+    //            do {
+    //                let encounterURL = try HorizonsEphemerisDownloader.writeAN10JSON(encounterEphemeris)
+    //
+    //                print("")
+    //                print("================ AN10 ENCOUNTER =======================")
+    //                print("Points: \(encounterEphemeris.points.count)")
+    //                print("First JD: \(encounterEphemeris.points.first?.julianDate ?? 0)")
+    //                print("Last JD: \(encounterEphemeris.points.last?.julianDate ?? 0)")
+    //                print("JSON: \(encounterURL.path)")
+    //                print("=======================================================")
+    //                print("")
+    //
+    //            } catch {
+    //                print("Failed writing AN10 encounter ephemeris: \(error)")
+    //                return
+    //            }
+    //
+    //            HorizonsEphemerisDownloader.downloadEarthAN10Encounter { earthResult in
+    //
+    //                switch earthResult {
+    //
+    //                case .success(let earthEphemeris):
+    //
+    //                    do {
+    //                        let earthURL = try HorizonsEphemerisDownloader.writeEarthAN10JSON(earthEphemeris)
+    //
+    //                        print("")
+    //                        print("================ AN10 EARTH ===========================")
+    //                        print("Points: \(earthEphemeris.points.count)")
+    //                        print("First JD: \(earthEphemeris.points.first?.julianDate ?? 0)")
+    //                        print("Last JD: \(earthEphemeris.points.last?.julianDate ?? 0)")
+    //                        print("JSON: \(earthURL.path)")
+    //                        print("=======================================================")
+    //                        print("")
+    //
+    //                    } catch {
+    //                        print("Failed writing AN10 Earth ephemeris: \(error)")
+    //                        return
+    //                    }
+    //
+    //                    HorizonsEphemerisDownloader.downloadAN10LongTerm { longTermResult in
+    //
+    //                        switch longTermResult {
+    //
+    //                        case .success(let longTermEphemeris):
+    //
+    //                            do {
+    //                                let longTermURL = try HorizonsEphemerisDownloader.writeAN10LongTermJSON(longTermEphemeris)
+    //
+    //                                print("")
+    //                                print("================ AN10 LONG-TERM =======================")
+    //                                print("Points: \(longTermEphemeris.points.count)")
+    //                                print("First JD: \(longTermEphemeris.points.first?.julianDate ?? 0)")
+    //                                print("Last JD: \(longTermEphemeris.points.last?.julianDate ?? 0)")
+    //                                print("JSON: \(longTermURL.path)")
+    //                                print("=======================================================")
+    //                                print("")
+    //
+    //                                print("================ AN10 DOWNLOAD COMPLETE ===============")
+    //                                print("All three AN10 ephemeris files created successfully.")
+    //                                print("=======================================================")
+    //                                print("")
+    //
+    //                            } catch {
+    //                                print("Failed writing AN10 long-term ephemeris: \(error)")
+    //                            }
+    //
+    //                        case .failure(let error):
+    //                            print("AN10 long-term Horizons download failed: \(error)")
+    //                        }
+    //                    }
+    //
+    //                case .failure(let error):
+    //                    print("AN10 Earth Horizons download failed: \(error)")
+    //                }
+    //            }
+    //
+    //        case .failure(let error):
+    //            print("AN10 encounter Horizons download failed: \(error)")
+    //        }
+    //    }
+    //}
+    //#endif
 
 #if DEBUG
     private func testApophisEphemeris() {
@@ -1238,35 +1421,35 @@ private func downloadApophisLongTermEphemeris() {
 #endif
 
 #if DEBUG
-private func downloadEarthEncounterEphemeris() {
+    private func downloadEarthEncounterEphemeris() {
 
-    HorizonsEphemerisDownloader.downloadEarthEncounter { result in
+        HorizonsEphemerisDownloader.downloadEarthEncounter { result in
 
-        switch result {
+            switch result {
 
-        case .success(let ephemeris):
+            case .success(let ephemeris):
 
-            do {
-                let url = try HorizonsEphemerisDownloader.writeEarthJSON(ephemeris)
+                do {
+                    let url = try HorizonsEphemerisDownloader.writeEarthJSON(ephemeris)
 
-                print("")
-                print("================ EARTH EPHEMERIS ====================")
-                print("Points: \(ephemeris.points.count)")
-                print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
-                print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
-                print("JSON: \(url.path)")
-                print("=====================================================")
-                print("")
+                    print("")
+                    print("================ EARTH EPHEMERIS ====================")
+                    print("Points: \(ephemeris.points.count)")
+                    print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
+                    print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
+                    print("JSON: \(url.path)")
+                    print("=====================================================")
+                    print("")
 
-            } catch {
-                print("Failed writing Earth ephemeris: \(error)")
+                } catch {
+                    print("Failed writing Earth ephemeris: \(error)")
+                }
+
+            case .failure(let error):
+                print("Earth Horizons download failed: \(error)")
             }
-
-        case .failure(let error):
-            print("Earth Horizons download failed: \(error)")
         }
     }
-}
 #endif
 
     deinit {
