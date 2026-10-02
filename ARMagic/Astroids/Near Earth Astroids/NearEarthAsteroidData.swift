@@ -54,11 +54,25 @@ enum NearEarthAsteroidData {
         earthEphemerisResourceName: "earth-2028-wn5-encounter"
     )
 
+    static let xf11 = NearEarthAsteroid(
+        name: "1997 XF11",
+        designation: "35396 1997 XF11",
+        diameterKM: 0.704,
+        isPotentiallyHazardous: true,
+        isImpactor: false,
+        encounterDate: makeUTCDate(year: 2028, month: 10, day: 26, hour: 6, minute: 44),
+        encounterDistanceKM: 929_228.0,
+        rotationPeriodHours: 3.257,
+        ephemerisResourceName: "xf11",
+        longTermEphemerisResourceName: "xf11_longterm",
+        earthEphemerisResourceName: "earth-2028-xf11-encounter"
+    )
 
     static let all: [NearEarthAsteroid] = [
         apophis,
         an10,
-        wn5
+        wn5,
+        xf11
     ]
 
     private static func makeUTCDate(year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Date {

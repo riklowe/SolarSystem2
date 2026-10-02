@@ -62,6 +62,9 @@
 		FDCD485A306ECCD60041D86D /* earth-2027-an10-encounter.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD4857306ECCD60041D86D /* earth-2027-an10-encounter.json */; };
 		FDCD485B306ECCD60041D86D /* an10.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD4855306ECCD60041D86D /* an10.json */; };
 		FDCD485C306ECCD60041D86D /* apophis.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD4856306ECCD60041D86D /* apophis.json */; };
+		FDCD4860306FDCB90041D86D /* xf11.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD485E306FDCB90041D86D /* xf11.json */; };
+		FDCD4861306FDCB90041D86D /* earth-2028-xf11-encounter.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD485D306FDCB90041D86D /* earth-2028-xf11-encounter.json */; };
+		FDCD4862306FDCB90041D86D /* xf11_longterm.json in Resources */ = {isa = PBXBuildFile; fileRef = FDCD485F306FDCB90041D86D /* xf11_longterm.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,6 +126,9 @@
 		FDCD4856306ECCD60041D86D /* apophis.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = apophis.json; sourceTree = "<group>"; };
 		FDCD4857306ECCD60041D86D /* earth-2027-an10-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2027-an10-encounter.json"; sourceTree = "<group>"; };
 		FDCD4858306ECCD60041D86D /* earth-2029-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2029-encounter.json"; sourceTree = "<group>"; };
+		FDCD485D306FDCB90041D86D /* earth-2028-xf11-encounter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "earth-2028-xf11-encounter.json"; sourceTree = "<group>"; };
+		FDCD485E306FDCB90041D86D /* xf11.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = xf11.json; sourceTree = "<group>"; };
+		FDCD485F306FDCB90041D86D /* xf11_longterm.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = xf11_longterm.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +301,9 @@
 		FDC97530306D295F007937E6 /* NEAEphemerides */ = {
 			isa = PBXGroup;
 			children = (
+				FDCD485D306FDCB90041D86D /* earth-2028-xf11-encounter.json */,
+				FDCD485E306FDCB90041D86D /* xf11.json */,
+				FDCD485F306FDCB90041D86D /* xf11_longterm.json */,
 				FDCD4855306ECCD60041D86D /* an10.json */,
 				FDCD4856306ECCD60041D86D /* apophis.json */,
 				FDCD4857306ECCD60041D86D /* earth-2027-an10-encounter.json */,
@@ -385,6 +394,9 @@
 				FDCD485A306ECCD60041D86D /* earth-2027-an10-encounter.json in Resources */,
 				FDCD485B306ECCD60041D86D /* an10.json in Resources */,
 				FDCD485C306ECCD60041D86D /* apophis.json in Resources */,
+				FDCD4860306FDCB90041D86D /* xf11.json in Resources */,
+				FDCD4861306FDCB90041D86D /* earth-2028-xf11-encounter.json in Resources */,
+				FDCD4862306FDCB90041D86D /* xf11_longterm.json in Resources */,
 				FDC97553306EAF72007937E6 /* wn5.json in Resources */,
 				FDC9753F306E8E35007937E6 /* an10_longterm.json in Resources */,
 				FDC97549306EA567007937E6 /* wn5_longterm.json in Resources */,

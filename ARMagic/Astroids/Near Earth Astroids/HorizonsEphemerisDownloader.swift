@@ -136,6 +136,51 @@ enum HorizonsEphemerisDownloader {
     }
 
     // ============================================================
+    // MARK: - 1997 XF11 ENCOUNTER
+    // ============================================================
+
+    static func downloadXF11Encounter(completion: @escaping (Result<NearEarthEphemeris, Error>) -> Void) {
+        downloadVectors(
+            command: "35396;",
+            designation: "35396 1997 XF11",
+            startTime: "2028-10-24 18:00",
+            stopTime: "2028-10-27 19:00",
+            stepSize: "1 h",
+            completion: completion
+        )
+    }
+
+    // ============================================================
+    // MARK: - 1997 XF11 LONG-TERM
+    // ============================================================
+
+    static func downloadXF11LongTerm(completion: @escaping (Result<NearEarthEphemeris, Error>) -> Void) {
+        downloadVectors(
+            command: "35396;",
+            designation: "35396 1997 XF11",
+            startTime: "2027-01-01 00:00",
+            stopTime: "2029-12-31 00:00",
+            stepSize: "6 h",
+            completion: completion
+        )
+    }
+
+    // ============================================================
+    // MARK: - 1997 XF11 EARTH ENCOUNTER
+    // ============================================================
+
+    static func downloadEarthXF11Encounter(completion: @escaping (Result<NearEarthEphemeris, Error>) -> Void) {
+        downloadVectors(
+            command: "399",
+            designation: "Earth",
+            startTime: "2028-10-24 18:00",
+            stopTime: "2028-10-27 19:00",
+            stepSize: "1 h",
+            completion: completion
+        )
+    }
+
+    // ============================================================
     // MARK: - GENERIC HORIZONS VECTOR DOWNLOAD
     // ============================================================
 
@@ -322,6 +367,22 @@ enum HorizonsEphemerisDownloader {
         return try writeJSON(ephemeris, filename: "an10_longterm.json")
     }
 
+    // ============================================================
+    // MARK: - 1997 XF11 JSON OUTPUT
+    // ============================================================
+
+    static func writeXF11JSON(_ ephemeris: NearEarthEphemeris) throws -> URL {
+        return try writeJSON(ephemeris, filename: "xf11.json")
+    }
+
+    static func writeEarthXF11JSON(_ ephemeris: NearEarthEphemeris) throws -> URL {
+        return try writeJSON(ephemeris, filename: "earth-2028-xf11-encounter.json")
+    }
+
+    static func writeXF11LongTermJSON(_ ephemeris: NearEarthEphemeris) throws -> URL {
+        return try writeJSON(ephemeris, filename: "xf11_longterm.json")
+    }
+    
     // ============================================================
     // MARK: - GENERIC JSON OUTPUT
     // ============================================================

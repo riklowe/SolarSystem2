@@ -28,6 +28,9 @@ class GameViewController: UIViewController {
     private var simulationPaused = false
     private var selectedSimulationSpeed: Double = 1.0
     private var selectedDisplayMode: SolarSystemDisplayMode = .compact
+
+    private var selectedNearEarthAsteroid: NearEarthAsteroid?
+
     private var seasonTestIndex = 0
 
     private let eclipseTestSpeed: Double = 0.001
@@ -223,6 +226,10 @@ class GameViewController: UIViewController {
         setupAR()
 
 //#if DEBUG
+//        downloadXF11Ephemerides()
+//#endif
+
+//#if DEBUG
 //downloadWN5Ephemerides()
 //#endif
 
@@ -261,22 +268,115 @@ class GameViewController: UIViewController {
         //downloadApophisEphemeris()
         //downloadAN10Ephemerides()
         //downloadApophisLongTermEphemeris()
-        testApophisEphemeris()
+//        testApophisEphemeris()
         //downloadEarthEncounterEphemeris()
 
-        NearEarthAsteroidAstronomy.debugApophis2029Encounter()
-        NearEarthAsteroidAstronomy.debugEncounter(for: NearEarthAsteroidData.an10)
-        NearEarthAsteroidAstronomy.debugEncounter(for: NearEarthAsteroidData.wn5)
+//        NearEarthAsteroidAstronomy.debugApophis2029Encounter()
+//        NearEarthAsteroidAstronomy.debugEncounter(for: NearEarthAsteroidData.an10)
+//        NearEarthAsteroidAstronomy.debugEncounter(for: NearEarthAsteroidData.wn5)
+        NearEarthAsteroidAstronomy.debugEncounter(for: NearEarthAsteroidData.xf11)
 
-        NearEarthAsteroidAstronomy.debugApophisLongTermOrbitChange()
+//        NearEarthAsteroidAstronomy.debugApophisLongTermOrbitChange()
 
-        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.apophis)
-        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.an10)
-        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.wn5)
+//        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.apophis)
+//        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.an10)
+//        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.wn5)
+//        SolarSystemDisplayCoordinates.debugCompactEncounter(asteroid: NearEarthAsteroidData.xf11)
 
 #endif
 
     }
+
+#if DEBUG
+    private func downloadXF11Ephemerides() {
+
+        print("")
+        print("================ XF11 HORIZONS DOWNLOAD ================")
+        print("Starting sequential Horizons downloads...")
+        print("")
+
+        HorizonsEphemerisDownloader.downloadXF11Encounter { result in
+            switch result {
+            case .success(let ephemeris):
+                do {
+                    let url = try HorizonsEphemerisDownloader.writeXF11JSON(ephemeris)
+                    print("XF11 encounter downloaded")
+                    print("Points: \(ephemeris.points.count)")
+                    print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
+                    print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
+                    print("File: \(url.path)")
+                } catch {
+                    print("XF11 encounter write failed: \(error)")
+                    return
+                }
+
+            case .failure(let error):
+                print("XF11 encounter download failed: \(error)")
+                return
+            }
+
+            print("")
+            print("Waiting 3 seconds before Earth request...")
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+
+                HorizonsEphemerisDownloader.downloadEarthXF11Encounter { result in
+                    switch result {
+                    case .success(let ephemeris):
+                        do {
+                            let url = try HorizonsEphemerisDownloader.writeEarthXF11JSON(ephemeris)
+                            print("XF11 Earth encounter downloaded")
+                            print("Points: \(ephemeris.points.count)")
+                            print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
+                            print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
+                            print("File: \(url.path)")
+                        } catch {
+                            print("XF11 Earth encounter write failed: \(error)")
+                            return
+                        }
+
+                    case .failure(let error):
+                        print("XF11 Earth encounter download failed: \(error)")
+                        return
+                    }
+
+                    print("")
+                    print("Waiting 3 seconds before long-term request...")
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+
+                        HorizonsEphemerisDownloader.downloadXF11LongTerm { result in
+                            switch result {
+                            case .success(let ephemeris):
+                                do {
+                                    let url = try HorizonsEphemerisDownloader.writeXF11LongTermJSON(ephemeris)
+                                    print("XF11 long-term downloaded")
+                                    print("Points: \(ephemeris.points.count)")
+                                    print("First JD: \(ephemeris.points.first?.julianDate ?? 0)")
+                                    print("Last JD: \(ephemeris.points.last?.julianDate ?? 0)")
+                                    print("File: \(url.path)")
+                                } catch {
+                                    print("XF11 long-term write failed: \(error)")
+                                    return
+                                }
+
+                            case .failure(let error):
+                                print("XF11 long-term download failed: \(error)")
+                                return
+                            }
+
+                            print("")
+                            print("================ XF11 DOWNLOAD COMPLETE ================")
+                            print("All three XF11 ephemeris files created successfully.")
+                            print("========================================================")
+                            print("")
+                        }
+                    }
+                }
+            }
+        }
+    }
+#endif
 
 //#if DEBUG
 //    private func jumpToApophisEncounter() {
@@ -1038,11 +1138,11 @@ private func downloadWN5Ephemerides() {
         solarSystemBuilder =
         nil
 
-        let builder =
-        SolarSystemBuilder(
+        let builder = SolarSystemBuilder(
             scene: arView.scene,
             simulationClock: simulationClock,
-            displayMode: selectedDisplayMode
+            displayMode: selectedDisplayMode,
+            selectedNearEarthAsteroidDesignation: selectedNearEarthAsteroid?.designation
         )
 
         solarSystemBuilder =
@@ -1305,6 +1405,8 @@ private func downloadWN5Ephemerides() {
         pauseButton.setTitle("▶︎", for: .normal)
         simulationSpeedLabel.text = "PAUSED"
 
+        selectedNearEarthAsteroid = nil
+
         rebuildSolarSystemForDisplayMode()
 
         updateSimulationDateLabel()
@@ -1356,6 +1458,8 @@ private func downloadWN5Ephemerides() {
 
     private func neaEncounterSelected(_ asteroid: NearEarthAsteroid) {
 
+        selectedNearEarthAsteroid = asteroid
+
         let encounterLeadTime: TimeInterval = 75.0 * 60.0
         let encounterSpeed: Double = 1.0 / 240.0
         let startDate = asteroid.encounterDate.addingTimeInterval(-encounterLeadTime)
@@ -1370,9 +1474,11 @@ private func downloadWN5Ephemerides() {
         pauseButton.setTitle("⏸", for: .normal)
         simulationSpeedLabel.text = "\(asteroid.name.uppercased()) FLYBY"
 
-        displaySettingsView.setDisplayMode(.earthMoon)
-
-        solarSystemBuilder?.update(for: startDate)
+        if selectedDisplayMode == .earthMoon {
+            rebuildSolarSystemForDisplayMode()
+        } else {
+            displaySettingsView.setDisplayMode(.earthMoon)
+        }
 
         updateSimulationDateLabel()
 

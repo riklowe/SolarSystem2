@@ -20,6 +20,14 @@ AR SOLAR SYSTEM — DEVELOPMENT HISTORY
 Version 1.0 — Eclipses, Van Allen Belts and Display Modes
 ------------------------------------------------------------------------
 
+• Added (35396) 1997 XF11 as the fourth fully modelled Near-Earth Asteroid.
+• Added JPL Horizons encounter, Earth and long-term ephemeris datasets for the October 2028 1997 XF11 close approach.
+• Validated the 26 October 2028 1997 XF11 closest approach at 06:43:34 UTC and approximately 929,227.6 km from Earth's centre, within approximately 0.4 km of the 929,228 km catalogue reference distance.
+• Validated 1997 XF11 Earth-relative flyby rendering across the complete ±36-hour encounter window using 865 five-minute trajectory samples.
+• Updated Near-Earth Asteroid encounter mode so Earth–Moon Scale displays only the currently selected encounter asteroid and its Earth-relative trajectory rather than all configured Near-Earth Asteroids.
+• Updated Near-Earth Asteroid encounter selection to rebuild Earth–Moon Scale when selecting another asteroid while already in that display mode, ensuring each encounter displays its own trajectory.
+• Validated isolated encounter rendering and trajectory switching for Apophis, 1999 AN10, 2001 WN5 and 1997 XF11.
+
 • Added a persistent display-mode indicator beneath the simulation date/time showing the currently selected Solar System display scale.
 • Added a generic Near-Earth Asteroid encounter selector populated from the shared NEA catalogue, allowing any configured asteroid encounter to be selected without asteroid-specific UI code.
 • Added automatic Near-Earth Asteroid encounter navigation that switches to Earth–Moon Scale and starts the simulation 75 minutes before the selected close approach.

@@ -67,11 +67,13 @@ final class SolarSystemBuilder {
     private var nearEarthAsteroidsVisible = true
     private var nearEarthAsteroidBuilders: [NearEarthAsteroidBuilder] = []
 
+    private let selectedNearEarthAsteroidDesignation: String?
 
     init(
         scene: SCNScene,
         simulationClock: SimulationClock,
-        displayMode: SolarSystemDisplayMode = .compact
+        displayMode: SolarSystemDisplayMode = .compact,
+        selectedNearEarthAsteroidDesignation: String? = nil
     ) {
         printLog("---------- \((moduleName.last)?.components(separatedBy: ".").first ?? "") / \(#function) ----------")
 
@@ -79,6 +81,7 @@ final class SolarSystemBuilder {
         self.simulationClock = simulationClock
         self.displayMode = displayMode
         self.displayScale = SolarSystemDisplayScale.scale(for: displayMode)
+        self.selectedNearEarthAsteroidDesignation = selectedNearEarthAsteroidDesignation
     }
 
     // ============================================================
@@ -265,51 +268,47 @@ final class SolarSystemBuilder {
 
         nearEarthAsteroidBuilders.removeAll()
 
-        for asteroid in NearEarthAsteroidData.all {
+        let asteroidsToBuild: [NearEarthAsteroid]
 
-//#if DEBUG
-//print("NEA BUILDER INPUT | SolarSystemBuilder displayMode: \(displayMode.rawValue)")
-//#endif
+        if displayMode == .earthMoon, let selectedDesignation = selectedNearEarthAsteroidDesignation {
+            asteroidsToBuild = NearEarthAsteroidData.all.filter { $0.designation == selectedDesignation }
+        } else {
+            asteroidsToBuild = NearEarthAsteroidData.all
+        }
 
+        for asteroid in asteroidsToBuild {
             let builder = NearEarthAsteroidBuilder(asteroid: asteroid, displayMode: displayMode)
 
-            // Moving asteroid body + label.
             parentNode.addChildNode(builder.rootNode)
 
-            // Fixed trajectory through which the asteroid moves.
-            // Currently generated only for Earth-Moon Scale.
             if let trajectory = builder.trajectory {
                 parentNode.addChildNode(trajectory)
             }
 
             builder.setVisible(nearEarthAsteroidsVisible)
             nearEarthAsteroidBuilders.append(builder)
-
-            // Put the asteroid at the correct position for the current date.
             builder.update(for: date)
         }
 
-#if DEBUG
-let neaNodes = parentNode.childNodes.filter {
-    $0.name?.hasPrefix("nea-") == true
-}
+    #if DEBUG
+        let neaNodes = parentNode.childNodes.filter { $0.name?.hasPrefix("nea-") == true }
 
-print("")
-print("================ NEA SCENE CHECK ======================")
-print("Display mode: \(displayMode.rawValue)")
-print("NEA moving root nodes: \(neaNodes.count)")
+        print("")
+        print("================ NEA SCENE CHECK ======================")
+        print("Display mode: \(displayMode.rawValue)")
+        print("Selected NEA: \(selectedNearEarthAsteroidDesignation ?? "[none]")")
+        print("NEA moving root nodes: \(neaNodes.count)")
 
-for node in neaNodes {
-    print("NEA root: \(node.name ?? "[unnamed]")")
-}
+        for node in neaNodes {
+            print("NEA root: \(node.name ?? "[unnamed]")")
+        }
 
-print("=======================================================")
-print("")
-#endif
-        
+        print("=======================================================")
+        print("")
+    #endif
     }
-
     
+
     // ============================================================
     // MARK: - PLANET DISPLAY SCALE
     // ============================================================
