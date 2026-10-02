@@ -1184,12 +1184,19 @@ final class DisplaySettingsView: UIView {
                 UIColor.white.withAlphaComponent(0.20).cgColor
         }
     }
+
+
+    func setDisplayMode(_ mode: SolarSystemDisplayMode) {
+        selectDisplayMode(mode)
+    }
+
     // ============================================================
     // MARK: - CURRENT DISPLAY MODE
     // ============================================================
     func currentDisplayMode() -> SolarSystemDisplayMode {
         return selectedDisplayMode
     }
+
     // ============================================================
     // MARK: - DISPLAY SETTINGS CALLBACK
     // ============================================================

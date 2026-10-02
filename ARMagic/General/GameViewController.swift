@@ -152,6 +152,11 @@ class GameViewController: UIViewController {
         action: #selector(nowTapped)
     )
 
+    private lazy var neaButton = createTimeButton(
+        title: "NEA",
+        action: #selector(neaButtonTapped)
+    )
+
     // ============================================================
     // MARK: - CENTER IMAGE
     // ============================================================
@@ -273,56 +278,56 @@ class GameViewController: UIViewController {
 
     }
 
-#if DEBUG
-    private func jumpToApophisEncounter() {
-
-        var components = DateComponents()
-        components.calendar = Calendar(identifier: .gregorian)
-        components.timeZone = TimeZone(secondsFromGMT: 0)
-        components.year = 2029
-        components.month = 4
-        components.day = 13
-        components.hour = 20
-        components.minute = 30
-        components.second = 0
-
-        guard let date = components.date else {
-            return
-        }
-
-        simulationClock.jump(to: date)
-
-        // 180x means three simulated minutes pass for every real second.
-        // The 90-minute 20:30 -> 22:00 encounter therefore takes ~30 seconds.
-        let encounterSpeed = 1.0 / 240.0
-
-        simulationClock.setSpeed(encounterSpeed)
-        simulationClock.resume()
-
-        selectedSimulationSpeed = encounterSpeed
-        simulationPaused = false
-
-        pauseButton.setTitle("⏸", for: .normal)
-        simulationSpeedLabel.text = "APOPHIS FLYBY"
-
-        solarSystemBuilder?.update(for: date)
-
-#if DEBUG
-        solarSystemBuilder?.rebuildEarthMoonOrbit(for: date)
-        solarSystemBuilder?.debugEarthMoonOrbitAlignment(for: date)
-#endif
-
-        updateSimulationDateLabel()
-
-        print("")
-        print("================ APOPHIS FLYBY TEST ==================")
-        print("Start: 13 Apr 2029 20:30:00 UTC")
-        print("Speed: 3 simulated minutes per real second")
-        print("Closest approach: approximately 21:46")
-        print("======================================================")
-        print("")
-    }
-#endif
+//#if DEBUG
+//    private func jumpToApophisEncounter() {
+//
+//        var components = DateComponents()
+//        components.calendar = Calendar(identifier: .gregorian)
+//        components.timeZone = TimeZone(secondsFromGMT: 0)
+//        components.year = 2029
+//        components.month = 4
+//        components.day = 13
+//        components.hour = 20
+//        components.minute = 30
+//        components.second = 0
+//
+//        guard let date = components.date else {
+//            return
+//        }
+//
+//        simulationClock.jump(to: date)
+//
+//        // 180x means three simulated minutes pass for every real second.
+//        // The 90-minute 20:30 -> 22:00 encounter therefore takes ~30 seconds.
+//        let encounterSpeed = 1.0 / 240.0
+//
+//        simulationClock.setSpeed(encounterSpeed)
+//        simulationClock.resume()
+//
+//        selectedSimulationSpeed = encounterSpeed
+//        simulationPaused = false
+//
+//        pauseButton.setTitle("⏸", for: .normal)
+//        simulationSpeedLabel.text = "APOPHIS FLYBY"
+//
+//        solarSystemBuilder?.update(for: date)
+//
+//#if DEBUG
+//        solarSystemBuilder?.rebuildEarthMoonOrbit(for: date)
+//        solarSystemBuilder?.debugEarthMoonOrbitAlignment(for: date)
+//#endif
+//
+//        updateSimulationDateLabel()
+//
+//        print("")
+//        print("================ APOPHIS FLYBY TEST ==================")
+//        print("Start: 13 Apr 2029 20:30:00 UTC")
+//        print("Speed: 3 simulated minutes per real second")
+//        print("Closest approach: approximately 21:46")
+//        print("======================================================")
+//        print("")
+//    }
+//#endif
 
 //#if DEBUG
 //    private func downloadWN5Ephemerides() {
@@ -734,7 +739,8 @@ private func downloadWN5Ephemerides() {
                 pauseButton,
                 forwardButton,
                 forwardFastButton,
-                nowButton
+                nowButton,
+                neaButton
             ]
         )
 
@@ -775,6 +781,7 @@ private func downloadWN5Ephemerides() {
         forwardButton.isEnabled = enabled
         forwardFastButton.isEnabled = enabled
         nowButton.isEnabled = enabled
+        neaButton.isEnabled = enabled
 
         let alpha: CGFloat =
         enabled ? 1.0 : 0.35
@@ -785,6 +792,7 @@ private func downloadWN5Ephemerides() {
         forwardButton.alpha = alpha
         forwardFastButton.alpha = alpha
         nowButton.alpha = alpha
+        neaButton.alpha = alpha
     }
 
     // ============================================================
@@ -1213,19 +1221,20 @@ private func downloadWN5Ephemerides() {
     @objc private func forwardTapped() {
         printLog("---------- \((moduleName.last)?.components(separatedBy: ".").first ?? "") / \(#function) ----------")
 
+        if selectedSimulationSpeed > 0.0 && selectedSimulationSpeed < 1.0 {
+            setSimulationSpeed(selectedSimulationSpeed)
+            return
+        }
+
         let newSpeed: Double
 
         if selectedSimulationSpeed > 0.0 {
-            newSpeed =
-            selectedSimulationSpeed + 1.0
+            newSpeed = selectedSimulationSpeed + 1.0
         } else {
-            newSpeed =
-            1.0
+            newSpeed = 1.0
         }
 
-        setSimulationSpeed(
-            newSpeed
-        )
+        setSimulationSpeed(newSpeed)
     }
 
     @objc private func forwardFastTapped() {
@@ -1284,36 +1293,107 @@ private func downloadWN5Ephemerides() {
 
     @objc private func nowTapped() {
 
-#if DEBUG
-        jumpToApophisEncounter()
-        return
-#endif
+        let now = Date()
 
-        simulationClock.jump(
-            to: Date()
-        )
-
-        simulationClock.setSpeed(
-            1.0
-        )
-
+        simulationClock.jump(to: now)
+        simulationClock.setSpeed(1.0)
         simulationClock.pause()
 
-        selectedSimulationSpeed =
-        1.0
+        selectedSimulationSpeed = 1.0
+        simulationPaused = true
 
-        simulationPaused =
-        true
+        pauseButton.setTitle("▶︎", for: .normal)
+        simulationSpeedLabel.text = "PAUSED"
 
-        pauseButton.setTitle(
-            "▶︎",
-            for: .normal
-        )
-
-        simulationSpeedLabel.text =
-        "PAUSED"
+        rebuildSolarSystemForDisplayMode()
 
         updateSimulationDateLabel()
+    }
+
+    @objc private func neaButtonTapped() {
+
+        let alert = UIAlertController(
+            title: "Near-Earth Asteroid Encounters",
+            message: "Select an encounter to view",
+            preferredStyle: .alert
+        )
+
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "dd MMM yyyy HH:mm 'UTC'"
+
+        for asteroid in NearEarthAsteroidData.all {
+
+            let dateText = formatter.string(from: asteroid.encounterDate)
+            let distanceText = String(format: "%,.0f km", asteroid.encounterDistanceKM)
+
+            let title = "\(asteroid.name) — \(dateText) — \(distanceText)"
+
+            let action = UIAlertAction(
+                title: title,
+                style: .default
+            ) { [weak self] _ in
+
+                self?.neaEncounterSelected(asteroid)
+            }
+
+            alert.addAction(action)
+        }
+
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel
+            )
+        )
+
+        present(
+            alert,
+            animated: true
+        )
+    }
+
+    private func neaEncounterSelected(_ asteroid: NearEarthAsteroid) {
+
+        let encounterLeadTime: TimeInterval = 75.0 * 60.0
+        let encounterSpeed: Double = 1.0 / 240.0
+        let startDate = asteroid.encounterDate.addingTimeInterval(-encounterLeadTime)
+
+        simulationClock.jump(to: startDate)
+        simulationClock.setSpeed(encounterSpeed)
+        simulationClock.resume()
+
+        selectedSimulationSpeed = encounterSpeed
+        simulationPaused = false
+
+        pauseButton.setTitle("⏸", for: .normal)
+        simulationSpeedLabel.text = "\(asteroid.name.uppercased()) FLYBY"
+
+        displaySettingsView.setDisplayMode(.earthMoon)
+
+        solarSystemBuilder?.update(for: startDate)
+
+        updateSimulationDateLabel()
+
+    #if DEBUG
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "dd MMM yyyy HH:mm:ss 'UTC'"
+
+        print("")
+        print("================ NEA FLYBY START ======================")
+        print("Object: \(asteroid.name)")
+        print("Designation: \(asteroid.designation)")
+        print("Start: \(formatter.string(from: startDate))")
+        print("Encounter: \(formatter.string(from: asteroid.encounterDate))")
+        print("Reference distance: \(String(format: "%.0f", asteroid.encounterDistanceKM)) km")
+        print("Speed: 3 simulated minutes per real second")
+        print("Display mode: Earth–Moon Scale")
+        print("========================================================")
+        print("")
+    #endif
     }
 
     private func setSimulationSpeed(
@@ -1345,9 +1425,11 @@ private func downloadWN5Ephemerides() {
         )
     }
 
-    private func speedDescription(
-        _ speed: Double
-    ) -> String {
+    private func speedDescription(_ speed: Double) -> String {
+
+        if speed > 0.0 && speed < 1.0 {
+            return "NEA FLYBY"
+        }
 
         if speed < 0 {
             return "\(Int(abs(speed)))× REVERSE"
@@ -1355,7 +1437,7 @@ private func downloadWN5Ephemerides() {
 
         return "\(Int(speed))×"
     }
-
+    
     // ============================================================
     // MARK: - RESET
     // ============================================================

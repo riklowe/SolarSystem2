@@ -20,6 +20,14 @@ AR SOLAR SYSTEM — DEVELOPMENT HISTORY
 Version 1.0 — Eclipses, Van Allen Belts and Display Modes
 ------------------------------------------------------------------------
 
+• Added a persistent display-mode indicator beneath the simulation date/time showing the currently selected Solar System display scale.
+• Added a generic Near-Earth Asteroid encounter selector populated from the shared NEA catalogue, allowing any configured asteroid encounter to be selected without asteroid-specific UI code.
+• Added automatic Near-Earth Asteroid encounter navigation that switches to Earth–Moon Scale and starts the simulation 75 minutes before the selected close approach.
+• Added production Near-Earth Asteroid flyby playback at approximately three simulated minutes per real second, replacing the earlier Apophis-specific DEBUG flyby test.
+• Updated simulation pause/resume controls to preserve the specialised Near-Earth Asteroid flyby speed instead of reverting to normal simulation timing.
+• Updated the NOW control to return to the current real-world date/time and rebuild the active display mode so Earth, Moon and Near-Earth Asteroid positions immediately match the current epoch.
+• Validated encounter selection and flyby playback for Apophis, 1999 AN10 and 2001 WN5.
+
 • Generalised Compact-mode Near-Earth Asteroid positioning using a shared radial mapping based on the existing planetary Compact display scale while preserving heliocentric direction.
 • Validated Compact-mode encounter positioning for Apophis, 1999 AN10 and 2001 WN5.
 • Corrected the JPL Horizons encounter-resource coverage for Apophis and 1999 AN10 to provide the complete ±36-hour Earth-relative flyby window.
